@@ -95,7 +95,7 @@ class Header extends Component {
             avatar: No_Avatar
 
           });
-          console.log('Another');
+          //console.log('Another');
       }
   }
   //////

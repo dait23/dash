@@ -66,11 +66,11 @@ class EditBanner extends Component {
 
     upload.end((err, response) => {
       if (err) {
-        console.error(err);
+        //console.error(err);
       }
 
       if (response.body.secure_url !== '') {
-        console.log(response.body);
+        //console.log(response.body);
         this.setState({
            imageUrl: response.body.secure_url,
            imageId: response.body.public_id

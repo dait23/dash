@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-snapshot';
 import Loadable from 'react-loadable'
 import Loading from './Loading'
 import fakeDelay from './fakeDelay'
@@ -81,7 +81,7 @@ const client = new ApolloClient({
 
 
 
-ReactDOM.render((
+render((
   <ApolloProvider client={client}>
     <Router>
       <div>

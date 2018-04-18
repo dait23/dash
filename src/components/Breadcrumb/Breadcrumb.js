@@ -15,7 +15,7 @@ const getPaths = (pathname) => {
     paths.push(currPath);
     return currPath;
   });
-  console.log(paths);
+  //console.log(paths);
   return paths;
 };
 

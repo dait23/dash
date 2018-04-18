@@ -60,7 +60,7 @@ class NewBanner extends Component {
       }
 
       if (response.body.secure_url !== '') {
-        console.log(response.body);
+        //console.log(response.body);
         this.setState({
            imageUrl: response.body.secure_url,
            imageId: response.body.public_id

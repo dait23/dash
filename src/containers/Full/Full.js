@@ -10,18 +10,18 @@ import Breadcrumb from '../../components/Breadcrumb/';
 //import Aside from '../../components/Aside/';
 import Footer from '../../components/Footer/';
 import Dashboard from '../../views/Dashboard/';
-import Charts from '../../views/Charts/';
-import Widgets from '../../views/Widgets/';
-import Buttons from '../../views/Components/Buttons/';
-import Cards from '../../views/Components/Cards/';
-import Forms from '../../views/Components/Forms/';
-import Modals from '../../views/Components/Modals/';
-import SocialButtons from '../../views/Components/SocialButtons/';
-import Switches from '../../views/Components/Switches/';
-import Tables from '../../views/Components/Tables/';
-import Tabs from '../../views/Components/Tabs/';
-import FontAwesome from '../../views/Icons/FontAwesome/';
-import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
+// import Charts from '../../views/Charts/';
+// import Widgets from '../../views/Widgets/';
+// import Buttons from '../../views/Components/Buttons/';
+// import Cards from '../../views/Components/Cards/';
+// import Forms from '../../views/Components/Forms/';
+// import Modals from '../../views/Components/Modals/';
+// import SocialButtons from '../../views/Components/SocialButtons/';
+// import Switches from '../../views/Components/Switches/';
+// import Tables from '../../views/Components/Tables/';
+// import Tabs from '../../views/Components/Tabs/';
+// import FontAwesome from '../../views/Icons/FontAwesome/';
+// import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 
 
 //////////////////Spazeee
@@ -84,66 +84,90 @@ import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 
 
 
-////Brand Category
-import BrandCategory from '../../views/Setting/BrandCat/All/'
-import NewBrandCategory from '../../views/Setting/BrandCat/New/'
-import EditBrandCategory from '../../views/Setting/BrandCat/Edit/'
+// ////Brand Category
+// import BrandCategory from '../../views/Setting/BrandCat/All/'
+// import NewBrandCategory from '../../views/Setting/BrandCat/New/'
+// import EditBrandCategory from '../../views/Setting/BrandCat/Edit/'
 
-////Main Category Brand
-import Category from '../../views/Setting/Category/All/'
-import NewCategory from '../../views/Setting/Category/New/'
-import EditCategory from '../../views/Setting/Category/Edit/'
+
+
+
+// ////Main Category Brand
+// import Category from '../../views/Setting/Category/All/'
+// import NewCategory from '../../views/Setting/Category/New/'
+// import EditCategory from '../../views/Setting/Category/Edit/'
+
+
 
 
 ////Category Partners
-import CategoryPartners from '../../views/Setting/PartnerCat/All/'
-import NewCategoryPartners from '../../views/Setting/PartnerCat/New/'
-import EditCategoryPartners from '../../views/Setting/PartnerCat/Edit/'
+// import CategoryPartners from '../../views/Setting/PartnerCat/All/'
+// import NewCategoryPartners from '../../views/Setting/PartnerCat/New/'
+// import EditCategoryPartners from '../../views/Setting/PartnerCat/Edit/'
 
-////Facility Partners
-import Facility from '../../views/Setting/Facility/All/'
-import NewFacility from '../../views/Setting/Facility/New/'
-import EditFacility from '../../views/Setting/Facility/Edit/'
+
+
+// ////Facility Partners
+// import Facility from '../../views/Setting/Facility/All/'
+// import NewFacility from '../../views/Setting/Facility/New/'
+// import EditFacility from '../../views/Setting/Facility/Edit/'
+
+
+
+
+// ////Visitor Type
+// import Visitor from '../../views/Setting/Visitor/All/'
+// import NewVisitor from '../../views/Setting/Visitor/New/'
+// import EditVisitor from '../../views/Setting/Visitor/Edit/'
+
+
+
 
 ////Visitor Type
-import Visitor from '../../views/Setting/Visitor/All/'
-import NewVisitor from '../../views/Setting/Visitor/New/'
-import EditVisitor from '../../views/Setting/Visitor/Edit/'
+// import Size from '../../views/Setting/Size/All/'
+// import NewSize from '../../views/Setting/Size/New/'
+// import EditSize from '../../views/Setting/Size/Edit/'
 
-////Visitor Type
-import Size from '../../views/Setting/Size/All/'
-import NewSize from '../../views/Setting/Size/New/'
-import EditSize from '../../views/Setting/Size/Edit/'
+
 
 
 ////BAnner
-import Banner from '../../views/Banner/All/'
-import NewBanner from '../../views/Banner/New/'
-import EditBanner from '../../views/Banner/Edit/'
+// import Banner from '../../views/Banner/All/'
+// import NewBanner from '../../views/Banner/New/'
+// import EditBanner from '../../views/Banner/Edit/'
+
+
 
 
 ////Pages
-import Page from '../../views/Pages/Static/All/'
-import NewPage from '../../views/Pages/Static/New/'
-import EditPage from '../../views/Pages/Static/Edit/'
+// import Page from '../../views/Pages/Static/All/'
+// import NewPage from '../../views/Pages/Static/New/'
+// import EditPage from '../../views/Pages/Static/Edit/'
 
 
-////MDM
-import Mdm from '../../views/Mdm/All/'
-import NewMdm from '../../views/Mdm/New/'
-import EditMdm from '../../views/Mdm/Edit/'
+
+// ////MDM
+// import Mdm from '../../views/Mdm/All/'
+// import NewMdm from '../../views/Mdm/New/'
+// import EditMdm from '../../views/Mdm/Edit/'
 
 
-////Member
-import Members from '../../views/Member/All/'
-import NewMember from '../../views/Member/New/'
-import EditMember from '../../views/Member/Edit/'
+
+// ////Member
+// import Members from '../../views/Member/All/'
+// import NewMember from '../../views/Member/New/'
+// import EditMember from '../../views/Member/Edit/'
+
+
 
 
 ////BDE
-import Bde from '../../views/Bde/All/'
-import NewBde from '../../views/Bde/New/'
-import EditBde from '../../views/Bde/Edit/'
+// import Bde from '../../views/Bde/All/'
+// import NewBde from '../../views/Bde/New/'
+// import EditBde from '../../views/Bde/Edit/'
+
+
+
 
 
 ////Merchant
@@ -152,10 +176,13 @@ import NewMerchant from '../../views/Merchant/New/'
 import EditMerchant from '../../views/Merchant/Edit/'
 
 
-////Brand
-import Brand from '../../views/Brand/All/'
-import NewBrand from '../../views/Brand/New/'
-import EditBrand from '../../views/Brand/Edit/'
+// ////Brand
+// import Brand from '../../views/Brand/All/'
+// import NewBrand from '../../views/Brand/New/'
+// import EditBrand from '../../views/Brand/Edit/'
+
+
+
 
 
 
@@ -193,9 +220,12 @@ import MdmPerformance from '../../views/Teams/Mdm/Performance/'
 
 
 ////Request
-import Partners from '../../views/Partners/All/'
-import NewPartners from '../../views/Partners/New/'
-import EditPartners from '../../views/Partners/Edit/'
+// import Partners from '../../views/Partners/All/'
+// import NewPartners from '../../views/Partners/New/'
+// import EditPartners from '../../views/Partners/Edit/'
+
+
+
 
 
 ////Space
@@ -203,9 +233,13 @@ import Spaces from '../../views/Spaces/All/'
 // import NewPartners from '../../views/Partners/New/'
 // import EditPartners from '../../views/Partners/Edit/'
 
-import AddSpace from '../../views/Partners/Space/'
+// import AddSpace from '../../views/Partners/Space/'
 
-import AddEditSpace from '../../views/Partners/SpaceEdit/'
+// import AddEditSpace from '../../views/Partners/SpaceEdit/'
+
+
+
+
 
 
 
@@ -361,6 +395,256 @@ const EditBrandType = Loadable({
 });
 
 
+const BrandCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/BrandCat/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewBrandCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/BrandCat/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditBrandCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/BrandCat/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Category = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Category/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Category/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Category/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const CategoryPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/PartnerCat/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewCategoryPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/PartnerCat/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditCategoryPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/PartnerCat/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Facility = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Facility/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewFacility = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Facility/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditFacility = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Facility/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Visitor = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Visitor/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewVisitor = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Visitor/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditVisitor = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Visitor/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Size = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Size/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewSize = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Size/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditSize = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Size/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Banner = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Banner/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewBanner = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Banner/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditBanner = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Banner/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Page = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Pages/Static/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewPage = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Pages/Static/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditPage = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Pages/Static/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Mdm = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Mdm/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewMdm = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Mdm/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditMdm = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Mdm/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Members = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Member/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewMember = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Member/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditMember = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Member/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const Bde = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Bde/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewBde = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Bde/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditBde = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Bde/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Brand = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Brand/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewBrand = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Brand/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditBrand = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Brand/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const Partners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const AddSpace = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/Space/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const AddEditSpace = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/SpaceEdit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
 
 class Full extends Component {
   render() {
@@ -374,18 +658,6 @@ class Full extends Component {
             <Container fluid>
               <Switch>
                 <Route path="/dashboard" name="Dashboard" component={Dashboard}/>
-                <Route path="/components/buttons" name="Buttons" component={Buttons}/>
-                <Route path="/components/cards" name="Cards" component={Cards}/>
-                <Route path="/components/forms" name="Forms" component={Forms}/>
-                <Route path="/components/modals" name="Modals" component={Modals}/>
-                <Route path="/components/social-buttons" name="Social Buttons" component={SocialButtons}/>
-                <Route path="/components/switches" name="Swithces" component={Switches}/>
-                <Route path="/components/tables" name="Tables" component={Tables}/>
-                <Route path="/components/tabs" name="Tabs" component={Tabs}/>
-                <Route path="/icons/font-awesome" name="Font Awesome" component={FontAwesome}/>
-                <Route path="/icons/simple-line-icons" name="Simple Line Icons" component={SimpleLineIcons}/>
-                <Route path="/widgets" name="Widgets" component={Widgets}/>
-                <Route path="/charts" name="Charts" component={Charts}/>
                 <Route path="/setting/meta" name="Meta" component={Meta}/>
                 <Route path="/setting/area/all" name="Area" component={Area}/>
                 <Route path="/setting/area/new" name="New" component={NewArea}/>
