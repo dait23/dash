@@ -13,7 +13,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import 'tachyons'
 
 import {MainApi} from './views/Api/';
-// import App from './App'
+import App from './App'
 
 import 'font-awesome/css/font-awesome.min.css';
   // Import Simple Line Icons Set
@@ -28,11 +28,11 @@ import 'simple-line-icons/css/simple-line-icons.css';
 // import Page500 from './views/Pages/Page500/'
 
 
-const App = Loadable({
- loader: () => fakeDelay(500).then(() => import('./App')),
-   loading: Loading,
-  timeout: 10000, // 10 second
-});
+// const App = Loadable({
+//  loader: () => fakeDelay(500).then(() => import('./App')),
+//    loading: Loading,
+//   timeout: 10000, // 10 second
+// });
 ////////////////////////////////////////////////
 
 const Login = Loadable({
