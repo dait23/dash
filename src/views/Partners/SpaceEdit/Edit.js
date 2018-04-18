@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom'
 import {MainApi, Cloudinary_Code, Cloudinary_Link, Cloudinary_Name} from '../../../views/Api/';
 import Dropzone from 'react-dropzone'
 import request from 'superagent';
@@ -8,9 +8,11 @@ import ReactQuill from "react-quill";
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 import {Image} from 'cloudinary-react';
-
+import Select from 'react-select-plus';
+import 'react-select-plus/dist/react-select-plus.css';
 import slugify from 'slugify';
-
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
 
 import { toast, ToastContainer } from 'react-toastify';
 //const history = createBrowserHistory();
@@ -43,6 +45,7 @@ class AddEditSpace extends Component {
     slug:'',
     imageUrl:'',
     imageId:'',
+      wideId:'',
     partnerId: '',
     price:'',
     uploadedFile: null
@@ -51,8 +54,14 @@ class AddEditSpace extends Component {
    
     this.handleDes = this.handleDes.bind(this)
     this.onUpdatePress = this.onUpdatePress.bind(this);
+    this.handleChangex = this.handleChangex.bind(this)
   }
-
+  
+  //////////
+       handleChangex = (wideId) => {
+        this.setState({ wideId : wideId.value});
+        //console.log(`category: ${categoryId.value}`);
+      }
   
     handleDes(value) {
     this.setState({ description: value});
@@ -118,6 +127,10 @@ class AddEditSpace extends Component {
               partner{
                 id
               }
+              wide{
+                id
+                size
+              }
             }
             }
           `
@@ -148,6 +161,7 @@ class AddEditSpace extends Component {
               imageId:results.data.Space.imageId,
               description:results.data.Space.description,
               partnerId:results.data.Space.partner.id,
+              wideId:results.data.Space.wide.id,
               loading:false
              });
             //...
@@ -222,7 +236,7 @@ formats = [
 ]
 
   render() {
-   if (this.state.loading) {
+    if (this.props.data.loading) {
       return (<div></div>)
     }
 
@@ -260,6 +274,25 @@ formats = [
                       <input type="text" id="text-input" value={this.state.title} name="title" className="form-control" placeholder="Title"
                       onChange={(e) => this.setState({title: e.target.value})}
                       onKeyUp={(e) => this.setState({slug: document.getElementById("slug").value})}
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Size</label>
+                    <div className="col-md-9">
+                      <Select
+                        name="wideId"
+                        placeholder="Select Size"
+                        value={this.state.wideId}
+                        onChange={this.handleChangex}
+                        options={this.props.data.allWideSpaces.map((wide) => (
+                           
+                           {value: wide.id, label: wide.size}
+
+
+                          ))}
                       />
                     </div>
                   </div>
@@ -333,5 +366,17 @@ formats = [
 
 
 }
-export default AddEditSpace;
+
+const FeedQuery = gql`query allTopics {
+  allWideSpaces {
+    id
+    size
+  }
+}
+`
+
+
+export default compose(
+  graphql(FeedQuery)
+)(withRouter(AddEditSpace))
 

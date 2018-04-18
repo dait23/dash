@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter} from 'react-router-dom'
 import ReactQuill from "react-quill";
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import Dropzone from 'react-dropzone'
 import request from 'superagent';
 import slugify from 'slugify';
 import PropTypes from 'prop-types';
+import Select from 'react-select-plus';
+import 'react-select-plus/dist/react-select-plus.css';
 
 import { toast, ToastContainer } from 'react-toastify';
 import {MainLink, Cloudinary_Code, Cloudinary_Link} from '../../../views/Api/';
@@ -31,14 +33,20 @@ class AddSpace extends Component {
     imageUrl:'',
     imageId:'',
     partnerId: this.props.match.params.id,
+    wideId:'',
     price:'',
     uploadedFile: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.handlePost = this.handlePost.bind(this)
+     this.handleChangex = this.handleChangex.bind(this)
   }
 
-  
+  //////////
+       handleChangex = (wideId) => {
+        this.setState({ wideId : wideId.value});
+        //console.log(`category: ${categoryId.value}`);
+      }
 
   handleChange(value) {
     this.setState({ description: value })
@@ -98,6 +106,9 @@ formats = [
 
 
   render() {
+     if (this.props.data.loading) {
+      return (<div></div>)
+    }
 
      var sluger =  slugify(this.state.title , {
                 replacement: '-',    // replace spaces with replacement
@@ -132,6 +143,24 @@ formats = [
                       <input type="text" id="text-input" value={this.state.title} name="title" className="form-control" placeholder="Title"
                       onChange={(e) => this.setState({title: e.target.value})}
                       onKeyUp={(e) => this.setState({slug: document.getElementById("slug").value})}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Size</label>
+                    <div className="col-md-9">
+                      <Select
+                        name="wideId"
+                        placeholder="Select Size"
+                        value={this.state.wideId}
+                        onChange={this.handleChangex}
+                        options={this.props.data.allWideSpaces.map((wide) => (
+                           
+                           {value: wide.id, label: wide.size}
+
+
+                          ))}
                       />
                     </div>
                   </div>
@@ -203,8 +232,8 @@ formats = [
   }
 
   handlePost = async () => {
-    const {title, slug, price, description, imageUrl, imageId,  partnerId} = this.state
-    await this.props.addBanner({variables: { title, slug, price, description, imageUrl, imageId,  partnerId}})
+    const {title, slug, price, description, imageUrl, imageId,  partnerId, wideId} = this.state
+    await this.props.addBanner({variables: { title, slug, price, description, imageUrl, imageId,  partnerId, wideId}})
 
 
    toast('Add Space Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000))
@@ -219,6 +248,7 @@ const addMutation = gql`
   $description: String, 
   $price: String, 
   $partnerId: ID,
+  $wideId: ID,
   $imageUrl: String,
   $imageId: String,
 
@@ -234,6 +264,7 @@ const addMutation = gql`
     partnerId:$partnerId
     imageUrl: $imageUrl
     imageId: $imageId
+    wideId: $wideId
 
 
     ) {
@@ -242,6 +273,16 @@ const addMutation = gql`
   }
 `
 
-const PageWithMutation = graphql(addMutation, { name: 'addBanner' })(AddSpace)
+const FeedQuery = gql`query allTopics {
+  allWideSpaces {
+    id
+    size
+  }
+}
+`
 
-export default withRouter(PageWithMutation)
+
+export default compose(
+  graphql(FeedQuery),
+  graphql(addMutation, { name: 'addBanner' }),
+)(withRouter(AddSpace))
