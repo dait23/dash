@@ -59,7 +59,7 @@ class List extends React.Component {
   handleDelete = async () => {
     await this.props.mutateUser({
       variables: {
-        idUser: this.props.mdm.id
+        idUser: this.props.team.id
       }
     })
 
