@@ -23,7 +23,7 @@ class Login extends Component {
               <CardGroup className="mb-0">
                 <Card className="p-4">
                   <CardBlock className="card-body">
-                    <img src={'http://res.cloudinary.com/spazeeid/image/upload/c_scale,w_200/lhukm16yizg5dl58e2vi'} alt="login"/><br />
+                    <img src={'https://res.cloudinary.com/spazeeid/image/upload/c_scale,w_200/lhukm16yizg5dl58e2vi'} alt="login"/><br />
                      <p className="text-muted"></p>
                     <p className="text-muted">Sign In to your account</p>
                     <InputGroup className="mb-3">

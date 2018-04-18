@@ -204,6 +204,20 @@ const EditPartners = Loadable({
 });
 
 
+const AddSpace = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/Space/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const AddEditSpace = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/SpaceEdit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
 
 
 class FullMdm extends Component {
@@ -260,7 +274,10 @@ class FullMdm extends Component {
                 <Route path="/setting/brand-category/edit/:id" name="New" component={EditBrandCategory}/>
                   <Route path="/partners/all" name="All" component={Partners}/>
                 <Route path="/partners/new" name="New" component={NewPartners}/>
-                 <Route path="/partners/edit/:id" name="Edit" component={EditPartners} />
+                  <Route path="/partners/edit/:id" name="Edit" component={EditPartners} />
+
+                <Route path="/partners/space/:id" name="Add Sapce" component={AddSpace} />
+                <Route path="/partners/space-edit/:id" name="Edit" component={AddEditSpace} />
                 <Route path="/mdm-team/all" name="Team" component={MdmTeam}/>
                  <Route path="/mdm-team/performance" name="Team performance" component={MdmPerformance}/>
                 <Redirect from="/" to="/dashboard"/>

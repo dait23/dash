@@ -131,6 +131,11 @@ import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 // import NewWorkflow from '../../views/Workflow/New/'
 // //import EditWorkflow from '../../views/Workflow/Edit/'
 
+// import AddSpace from '../../views/Partners/Space/'
+
+// import AddEditSpace from '../../views/Partners/SpaceEdit/'
+
+
 const Partners = Loadable({
  loader: () => fakeDelay(500).then(() => import('../../views/Partners/All/')),
    loading: Loading,
@@ -145,6 +150,19 @@ const NewPartners = Loadable({
 
 const EditPartners = Loadable({
  loader: () => fakeDelay(500).then(() => import('../../views/Partners/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const AddSpace = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/Space/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const AddEditSpace = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/SpaceEdit/')),
    loading: Loading,
   timeout: 10000, // 10 second
 });
@@ -177,6 +195,10 @@ class FullMdm extends Component {
                 <Route path="/charts" name="Charts" component={Charts}/>
                 <Route path="/partners/all" name="All" component={Partners}/>
                 <Route path="/partners/new" name="New" component={NewPartners}/>
+                <Route path="/partners/edit/:id" name="Edit" component={EditPartners} />
+
+                <Route path="/partners/space/:id" name="Add Sapce" component={AddSpace} />
+                <Route path="/partners/space-edit/:id" name="Edit" component={AddEditSpace} />
                 
                 <Redirect from="/" to="/dashboard"/>
               </Switch>
