@@ -47,7 +47,7 @@ class Login extends Component {
                     <Row>
                       <Col xs="6" className="pull-left">
                         {this.state.email && this.state.password &&
-                        <Button color="primary" className="px-4"  onClick={this.authenticateUser} style={{marginLeft:-15}}>Login</Button>
+                        <Button color="primary" className="px-4"  onClick={this.authenticateUser} style={{marginLeft:0}}>Login</Button>
                         }
                       </Col>
                       <Col xs="6" className="text-right">
