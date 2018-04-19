@@ -219,6 +219,101 @@ const AddEditSpace = Loadable({
 
 
 
+const Collabs = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Collab/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewCollabs = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Collab/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditCollabs = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Collab/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+///////////////////////////size
+
+const Size = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Size/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewSize = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Size/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditSize = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Size/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+///////////////visitor
+
+const Visitor = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Visitor/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewVisitor = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Visitor/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditVisitor = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Visitor/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const Facility = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Facility/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewFacility = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Facility/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditFacility = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Facility/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+//////////////////catpart
+const CategoryPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/PartnerCat/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewCategoryPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/PartnerCat/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditCategoryPartners = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/PartnerCat/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
 
 class FullMdm extends Component {
   render() {
@@ -272,14 +367,31 @@ class FullMdm extends Component {
                 <Route path="/setting/brand-category/all" name="category" component={BrandCategory}/>
                 <Route path="/setting/brand-category/new" name="New" component={NewBrandCategory}/>
                 <Route path="/setting/brand-category/edit/:id" name="New" component={EditBrandCategory}/>
-                  <Route path="/partners/all" name="All" component={Partners}/>
+                <Route path="/partners/all" name="All" component={Partners}/>
                 <Route path="/partners/new" name="New" component={NewPartners}/>
-                  <Route path="/partners/edit/:id" name="Edit" component={EditPartners} />
+                <Route path="/partners/edit/:id" name="Edit" component={EditPartners} />
 
                 <Route path="/partners/space/:id" name="Add Sapce" component={AddSpace} />
                 <Route path="/partners/space-edit/:id" name="Edit" component={AddEditSpace} />
                 <Route path="/mdm-team/all" name="Team" component={MdmTeam}/>
                  <Route path="/mdm-team/performance" name="Team performance" component={MdmPerformance}/>
+
+                <Route path="/setting/collabs/all" name="All" component={Collabs}/>
+                <Route path="/setting/collabs/new" name="New" component={NewCollabs}/>
+                <Route path="/setting/collabs/edit/:id" name="Edit" component={EditCollabs}/>
+                 <Route path="/setting/size/all" name="Size" component={Size}/>
+                <Route path="/setting/size/new" name="New" component={NewSize}/>
+                <Route path="/setting/size/edit/:id" name="Edit" component={EditSize}/>
+                 <Route path="/setting/visitor-type/all" name="Visitor" component={Visitor}/>
+                <Route path="/setting/visitor-type/new" name="New" component={NewVisitor}/>
+                <Route path="/setting/visitor-type/edit/:id" name="Edit" component={EditVisitor}/>
+                <Route path="/setting/facility-partners/all" name="Facility" component={Facility}/>
+                <Route path="/setting/facility-partners/new" name="New" component={NewFacility}/>
+                <Route path="/setting/facility-partners/edit/:id" name="Edit" component={EditFacility}/>
+                <Route path="/setting/category-partners/all" name="category" component={CategoryPartners}/>
+                <Route path="/setting/category-partners/new" name="New" component={NewCategoryPartners}/>
+                <Route path="/setting/category-partners/edit/:id" name="New" component={EditCategoryPartners}/>
+
                 <Redirect from="/" to="/dashboard"/>
               </Switch>
             </Container>

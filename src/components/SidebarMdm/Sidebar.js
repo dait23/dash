@@ -20,26 +20,13 @@ class Sidebar extends Component {
 
   renderSetting(){
 
-    if(window.localStorage.getItem('urole') === 'Mdm' && window.localStorage.getItem('uname') === 'Fahrix'){
+    if(window.localStorage.getItem('urole') === 'Mdm' && window.localStorage.getItem('uname') === 'Vidra'){
 
       return (
         <div>
 
 
-           <li className="nav-item nav-dropdown">
-              <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Mdm Teams</a>
-              <ul className="nav-dropdown-items">
-               
-               <li className="nav-item">
-                  <NavLink to={'/mdm-team/all'} className="nav-link" activeClassName="active"><i className="icon-ghost"></i> All Teams</NavLink>
-                </li>
-           
-                <li className="nav-item">
-                  <NavLink to={'/mdm-team/performance'} className="nav-link" activeClassName="active"><i className="icon-speedometer"></i>Performance Team</NavLink>
-                </li>
-
-              </ul>
-            </li>
+          
 
           <li className="nav-item nav-dropdown">
               <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="icon-game-controller"></i> Settings</a>
@@ -47,6 +34,22 @@ class Sidebar extends Component {
                
                <li className="nav-item">
                   <NavLink to={'/setting/category/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Main Category</NavLink>
+                </li>
+
+                 <li className="nav-item">
+                  <NavLink to={'/setting/collabs/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i>Event Collaboration</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to={'/setting/size/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Size Space</NavLink>
+                </li>
+                 <li className="nav-item">
+                  <NavLink to={'/setting/visitor-type/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Visitor Type</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to={'/setting/facility-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Facility Partners</NavLink>
+                </li>
+                 <li className="nav-item">
+                  <NavLink to={'/setting/category-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Category Partners</NavLink>
                 </li>
            
                 <li className="nav-item">
