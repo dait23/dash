@@ -81,6 +81,10 @@ class Sidebar extends Component {
                 </li>
               </ul>
             </li>
+
+            <li className="nav-item">
+                  <NavLink to={'/inquiry/all'} className="nav-link" activeClassName="active"><i className="fa fa-money"></i>Inquiry</NavLink>
+            </li>
             
              <li className="nav-item">
                   <NavLink to={'/notification/all'} className="nav-link" activeClassName="active"><i className="icon-bulb"></i>Notification</NavLink>
@@ -113,6 +117,9 @@ class Sidebar extends Component {
                 </li>
                  <li className="nav-item">
                   <NavLink to={'/setting/visitor-type/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Visitor Type</NavLink>
+                </li>
+                 <li className="nav-item">
+                  <NavLink to={'/setting/rent-type/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Rent Type</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to={'/setting/facility-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Facility Partners</NavLink>

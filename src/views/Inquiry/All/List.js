@@ -1,217 +1,159 @@
 import React from 'react';
 import { Link} from 'react-router-dom';
+import ListSlider from './List';
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types';
-import Modal from 'react-responsive-modal';
+import Spinner from 'react-spinkit';
 
-class ListSlider extends React.Component {
+class Inquiry extends React.Component {
 
   static propTypes = {
-    inquiry: PropTypes.object,
-    //mutatePost: PropTypes.func,
+    data: PropTypes.object,
     refresh: PropTypes.func,
   }
-
-   constructor(props) {
-    super(props);
-     this.state = { 
-     
-      open: false,
-
-     }
-    //this.handleChange = this.handleChange.bind(this)
-  }
-  /////////////Modal
-
-  onOpenModal = () => {
-    this.setState({ open: true });
-  };
-
-  onCloseModal = () => {
-    this.setState({ open: false });
-  };
-
-  ///////////////////////
-
-//   renderFacility(){
-
-//     if (this.state.loading) {
-//       return (<div><Spinner name="double-bounce" /></div>)
-//     }
-     
-//   return(
-//      <td>
-//       {this.props.inquiry.facilities.map((fasilitas) => (
-
-//                         "xxx"
-//                        ))}   
-//   </td>
-//     )
-
   
+  //  constructor(props) {
+  //   super(props);
+  //   //this.forceUpdate();
+  //   //this.handleChange = this.handleChange.bind(this)
+  // }
+
+  componentDidMount() {
+       this.forceUpdate();
+  }
+
+// renderAddNew(){
+
+//   if(window.localStorage.getItem('urole') == 'Mdm'){
+   
+//    return(
+      
+//       <div></div>
+//     )
+//   }
+//   else{
+
+//     return(
+      
+//       <Link to={'/brand/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
+//     )
+//   }
+
+
 // }
 
-  ////////////Modal
+
+// renderBde(){
+
+//    if(window.localStorage.getItem('urole') == 'Mdm'){
 
 
+//     return(
 
-  renderStatus(){
- 
-   if (this.props.inquiry.status === '0' && window.localStorage.getItem('urole') === 'Mdm'){
+//                 <thead>
+//                     <tr>
+//                       <th>Title</th>
+//                       <th>Wide Space</th>
+//                       <th>Category</th>
+//                       <th>Type</th>
+//                       <th>Area</th>
+//                       <th>Remarks</th>
+//                       <th>From</th>
+//                       <th>Status</th>
+//                       <th>Action</th>
+//                     </tr>
+//                   </thead>
 
-    return(
-    
-      <div>
-       <span className="badge badge-success">Open</span>
-       </div>
-
-      )
-
-   } 
-
-    if (this.props.inquiry.status === '0' && window.localStorage.getItem('urole') === 'Bde'){
-
-    return(
-    
-      <div>
-       <span className="badge badge-success">Open</span>
-       </div>
-
-      )
-
-   }
-
-   if (this.props.inquiry.status === '0' && window.localStorage.getItem('urole') === 'Super'){
-
-    return(
-    
-      <div>
-       <Link to={`/inquiry/edit/${this.props.inquiry.id}`} className="badge badge-success">Open</Link>
-       </div>
-
-      )
-
-   }
-   else{
-
-      return(
-      <div>
-      <span className="badge badge-danger">Close</span>
-     </div>
-      )
-   }
+//       )
 
 
+//    }else{
 
-  }
+//       return(
 
 
-renderAction(){
+//       )
 
-  if(window.localStorage.getItem('urole') === 'Mdm' && this.props.inquiry.user.id === window.localStorage.getItem('uid')){
-   
-   return(
-    <div>
-     
-      <Link to={`/inquiry/edit/${this.props.inquiry.id}`} className="badge badge-info">Edit</Link>
-      <span className="badge badge-danger" onClick={this.handleDelete} style={{cursor: 'pointer'}}>Delete</span>
-    </div>
-    )
-  }
-   if(window.localStorage.getItem('urole') === 'Super'){
-   
-   return(
-    <div>
-     
-      <Link to={`/inquiry/edit/${this.props.inquiry.id}`} className="badge badge-info">Edit</Link>
-      <span className="badge badge-danger" onClick={this.handleDelete} style={{cursor: 'pointer'}}>Delete</span>
-    </div>
-    )
-  }
-  else{
+//    }
 
-    return(
-      <div>
-       <span className="badge badge-warning" onClick={this.onOpenModal} style={{cursor: 'pointer'}}>View</span>
-      </div>
-    )
-  }
-}
-
-renderModal(){
- const { open } = this.state;
-  return(
-
-     <div>
-        <Modal open={open} onClose={this.onCloseModal} little>
-          <h4>{this.props.inquiry.title}</h4>
-           <tr>
-                      <td>{this.props.inquiry.title}</td><br />
-                      <td>{this.props.inquiry.wide}</td><br />
-                      <td>{this.props.inquiry.category.name}</td><br />
-                      <td>{this.props.inquiry.type.name}</td><br />
-                      <td>{this.props.inquiry.area.name}</td><br />
-                      <td dangerouslySetInnerHTML={{ __html: this.props.inquiry.remarks }} ></td><br />
-                       <td>{this.props.inquiry.user.name}</td><br />
-                         <td>{this.renderStatus()}</td>
-           </tr>
-        </Modal>
-      </div>
-
-  )
-}
+// }
 
 
 
   render () {
+    if (this.props.data.loading) {
+      return (<div><Spinner name="double-bounce" /></div>)
+    }
 
+    if (this.props.data.allInquiries && this.props.data.allInquiries.error) {
+    return <div>Error</div>
+   }
 
     return (
-     
-                    <tr>
-                      <td>{this.props.inquiry.title}</td>
-                       <td></td>
-                      <td>{this.props.inquiry.wide}</td>
-                      <td>{this.props.inquiry.category.name}</td>
-                      <td>{this.props.inquiry.type.name}</td>
-                      <td>{this.props.inquiry.facilities.map((tipe) => (
-                        tipe.name + ', '
-                       ))}   
-                     </td>
-                      <td>{this.props.inquiry.area.name}</td>
-                      <td dangerouslySetInnerHTML={{ __html: this.props.inquiry.remarks }} ></td>
-                       <td>{this.props.inquiry.user.name}</td>
-                         <td>{this.renderStatus()}</td>
-                      <td width='150'>
-                         {this.renderAction()}
-                      </td>
-                       {this.renderModal()}
+    <div className="animated fadeIn">
+      <div className="row">
+          <div className="col-lg-12">
+            <div className="card">
+              <div className="card-header">
+                <i className="fa fa-image"></i> All Inquiry
+                 <Link to={'/inquiry/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
+              </div>
+              <div className="card-block">
+                <table className="table table-bordered table-striped table-sm">
+                  <thead>
+                     <tr>
+                      <th>Member</th>
+                      <th>Partner Space</th>
+                      <th>Start At</th>
+                      <th>End At</th>
+                      <th>Status</th>     
+                      <th>Action</th>
                     </tr>
-                
-                  
+                  </thead>
+                  <tbody>
+           {this.props.data.allInquiries.map((inquiry) => (
+            <ListSlider
+              key={inquiry.id}
+              inquiry={inquiry}
+              refresh={() => this.props.data.refetch()}
+            />
+          ))}
+           </tbody>
+          </table>
+        </div>
+       </div>
+         </div>
+        </div>
+      </div>
+
     )
-  }
-
-  handleDelete = async () => {
-    await this.props.mutateBanner({
-      variables: {
-        idSlider: this.props.inquiry.id,
-      }
-    })
-
-    window.location.reload();
   }
 }
 
-const deleteBanner = gql`
-  mutation deleteBanner($idSlider: ID!) {
-    deleteInquiry(id: $idSlider) {
+const FeedQuery = gql`query allBrands {
+   allInquiries(orderBy: createdAt_DESC) {
+    id
+    title
+    startAt
+    endAt
+    status
+    isApprove
+    user{
       id
+      name
+      member{
+        firstName
+        lastName
+      }
+    }
+    partner{
+      id
+      name
     }
   }
-`
+   
+}`
+const ListPageWithData = graphql(FeedQuery)(Inquiry)
 
-const SliderWithMutation = graphql(deleteBanner, {name : 'mutateBanner'})(ListSlider)
-
-export default SliderWithMutation
+export default ListPageWithData

@@ -646,6 +646,25 @@ const AddEditSpace = Loadable({
 });
 
 
+const Rent = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Rent/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewRent = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Rent/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditRent = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Rent/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
 class Full extends Component {
   render() {
     return (
@@ -747,6 +766,10 @@ class Full extends Component {
                 <Route path="/member/edit/:id" name="Edit" component={EditMember} />
 
                 <Route path="/spaces/all" name="All" component={Spaces}/>
+
+                 <Route path="/setting/rent-type/all" name="Size" component={Rent}/>
+                <Route path="/setting/rent-type/new" name="New" component={NewRent}/>
+                <Route path="/setting/rent-type/edit/:id" name="Edit" component={EditRent}/>
 
                 <Redirect from="/" to="/dashboard"/>
               </Switch>

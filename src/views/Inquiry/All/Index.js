@@ -97,22 +97,17 @@ class Inquiry extends React.Component {
             <div className="card">
               <div className="card-header">
                 <i className="fa fa-image"></i> All Inquiry
-                 <Link to={'/inquiry/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
+                
               </div>
               <div className="card-block">
                 <table className="table table-bordered table-striped table-sm">
                   <thead>
-                    <tr>
-                      <th>Project Name</th>
-                      <th>Budget</th>
-                      <th>Wide Space</th>
-                      <th>Category</th>
-                      <th>Type</th>
-                      <th>Facility</th>
-                      <th>Area</th>
-                      <th>Remarks</th>
-                      <th>From</th>
-                      <th>Status</th>
+                     <tr>
+                      <th>Member</th>
+                      <th>Partner Space</th>
+                      <th>Start At</th>
+                      <th>End At</th>
+                      <th>Status</th>     
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -140,31 +135,25 @@ const FeedQuery = gql`query allBrands {
    allInquiries(orderBy: createdAt_DESC) {
     id
     title
-    wide
+    startAt
+    endAt
     status
-    facilities{
-      id
-      name
-    }
-    category{
-      name
-    }
-    type{
-      name
-    }
-    area{
-      name
-    }
+    isApprove
     user{
       id
       name
+      member{
+        firstName
+        lastName
+      }
     }
-
-    price
-    remarks
+    partner{
+      id
+      name
+    }
   }
+   
 }`
-
 const ListPageWithData = graphql(FeedQuery)(Inquiry)
 
 export default ListPageWithData

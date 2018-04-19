@@ -109,6 +109,9 @@ class Sidebar extends Component {
              <li className="nav-item">
                   <NavLink to={'/partners/all'} className="nav-link" activeClassName="active"><i className="fa fa-building-o"></i>Partners</NavLink>
             </li>
+            <li className="nav-item">
+                  <NavLink to={'/inquiry/all'} className="nav-link" activeClassName="active"><i className="fa fa-money"></i>Inquiry</NavLink>
+            </li>
              <li className="nav-item">
                   <NavLink to={'/invoice/all'} className="nav-link" activeClassName="active"><i className="icon-calculator"></i>My Invoice</NavLink>
             </li>
