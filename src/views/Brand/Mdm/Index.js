@@ -29,7 +29,7 @@ renderAddNew(){
    
    return(
       
-      <div></div>
+      <Link to={'/brand/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
     )
   }
   else{
