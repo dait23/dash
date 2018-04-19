@@ -46,8 +46,11 @@ class AddEditSpace extends Component {
     imageUrl:'',
     imageId:'',
       wideId:'',
+      rentId:'',
     partnerId: '',
     price:'',
+    datax:[],
+    loading: true,
     uploadedFile: null
 
     }
@@ -55,8 +58,46 @@ class AddEditSpace extends Component {
     this.handleDes = this.handleDes.bind(this)
     this.onUpdatePress = this.onUpdatePress.bind(this);
     this.handleChangex = this.handleChangex.bind(this)
+     this.handleChangeRent = this.handleChangeRent.bind(this)
   }
   
+ getRent(){
+     var that = this;
+     
+     var fetch = require('graphql-fetch')(MainApi)
+      var query = `
+            query allBrandTypes{
+              allRentTypes (orderBy: createdAt_DESC) {
+                id
+                name
+
+              }
+            }
+          `
+          var queryVars = {
+            
+          }
+          var opts = {
+            // custom fetch options
+          }
+
+
+          fetch(query, queryVars, opts).then(function (results) {
+            if (results.errors) {
+              //...
+              return
+            }
+            //var BlogCategory = results.data.BlogCategory
+
+            that.setState({
+              datax : results.data.allRentTypes,
+              loading: false
+
+             });
+            //...
+           console.log(that.state.datax);
+          })
+  }
   //////////
        handleChangex = (wideId) => {
         this.setState({ wideId : wideId.value});
@@ -67,7 +108,10 @@ class AddEditSpace extends Component {
     this.setState({ description: value});
   }
  
-
+ handleChangeRent = (rentId) => {
+        this.setState({ rentId : rentId.value});
+        //console.log(`rent: ${rentId.value}`);
+  }
   onImageDrop(files) {
     this.setState({
       uploadedFile: files[0]
@@ -99,6 +143,7 @@ class AddEditSpace extends Component {
   componentDidMount() {
     var that = this;
     that.getData();
+    that.getRent();
       
   }
 
@@ -126,6 +171,10 @@ class AddEditSpace extends Component {
               imageUrl
               partner{
                 id
+              }
+              rent{
+                id
+                name
               }
               wide{
                 id
@@ -162,6 +211,7 @@ class AddEditSpace extends Component {
               description:results.data.Space.description,
               partnerId:results.data.Space.partner.id,
               wideId:results.data.Space.wide.id,
+              rentId:results.data.Space.rent.id,
               loading:false
              });
             //...
@@ -176,8 +226,8 @@ class AddEditSpace extends Component {
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price: String, $imageId: String, $imageUrl: String, $description: String, $partnerId: ID){
-              updateSpace (id: $id, title: $title, slug: $slug, price: $price, imageId: $imageId, imageUrl: $imageUrl, description: $description, partnerId: $partnerId,){
+            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price: String, $imageId: String, $imageUrl: String, $description: String, $partnerId: ID, $rentId: ID){
+              updateSpace (id: $id, title: $title, slug: $slug, price: $price, imageId: $imageId, imageUrl: $imageUrl, description: $description, partnerId: $partnerId, rentId: $rentId){
                 id           
               }
             }
@@ -188,6 +238,7 @@ class AddEditSpace extends Component {
             slug: this.state.slug,
             price: this.state.price,
             partnerId: this.state.partnerId,
+            rentId: this.state.rentId,
             imageUrl: this.state.imageUrl,
             imageId: this.state.imageId,
             description: this.state.description 
@@ -234,6 +285,33 @@ formats = [
   'list', 'bullet', 'indent',
   'link', 'image', 'video'
 ]
+
+
+
+renderRent(){
+
+  if (this.state.loading) {
+      return (<div></div>)
+    }
+
+    return(
+
+      <Select
+                        name="rentId"
+                        placeholder="Waktu Sewa"
+                        value={this.state.rentId}
+                        onChange={this.handleChangeRent}
+                        options={this.state.datax.map((rent) => (
+                           
+                           {value: rent.id, label: rent.name}
+
+
+                          ))}
+                      />
+
+    )
+
+}
 
   render() {
     if (this.props.data.loading) {
@@ -294,6 +372,14 @@ formats = [
 
                           ))}
                       />
+                    </div>
+                  </div>
+
+
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Waktu Sewa</label>
+                    <div className="col-md-9">
+                       {this.renderRent()}
                     </div>
                   </div>
 
