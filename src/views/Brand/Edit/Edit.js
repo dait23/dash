@@ -31,6 +31,7 @@ class EditBrand extends Component {
     id: '',
     address: '',
     name: '',
+    company:'',
     phone: '',
     source: '',
     follower: '',
@@ -216,6 +217,7 @@ class EditBrand extends Component {
               Brand(id: $id){
               id
               name
+              company
               picName
               picPhone
               follower
@@ -261,6 +263,7 @@ class EditBrand extends Component {
               data : results.data.Brand,
               id:results.data.Brand.id,
               name:results.data.Brand.name,
+              company:results.data.Brand.company,
               email:results.data.Brand.email,
               source:results.data.Brand.source,
               follower:results.data.Brand.follower,
@@ -295,7 +298,8 @@ class EditBrand extends Component {
           var query = `
             mutation updateBrand (
               $id: ID!,
-              $name: String!, 
+              $name: String!,
+              $company: String, 
               $email: String, 
               $address: String, 
               $phone: String, 
@@ -315,7 +319,8 @@ class EditBrand extends Component {
             ){
               updateBrand (
               id: $id,
-              name: $name, 
+              name: $name,
+              company:$company, 
               email:$email,
               phone: $phone,
               source: $source,
@@ -340,6 +345,7 @@ class EditBrand extends Component {
           var queryVars = {
             id: this.state.id,
             name: this.state.name,
+            company: this.state.company,
             picName: this.state.picName,
             picPhone: this.state.picPhone,
             email: this.state.email,
@@ -466,6 +472,14 @@ renderTipe(){
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.name} name="name" className="form-control" placeholder="Name"
                       onChange={(e) => this.setState({name: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Company Name</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.company} name="company" className="form-control" placeholder="company name"
+                      onChange={(e) => this.setState({company: e.target.value})}
                       />
                     </div>
                   </div>

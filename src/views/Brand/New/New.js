@@ -30,6 +30,7 @@ class NewBrand extends Component {
     address: '',
     name: '',
     phone: '',
+    company:'',
     source: '',
     email: '',
     categoryId: '',
@@ -212,10 +213,19 @@ renderTipe(){
                    <div className="col-md-6">
                            
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">brand Name</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Brand Name</label>
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.name} name="name" className="form-control" placeholder="brand name"
                       onChange={(e) => this.setState({name: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Company Name</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.company} name="company" className="form-control" placeholder="company name"
+                      onChange={(e) => this.setState({company: e.target.value})}
                       />
                     </div>
                   </div>
@@ -388,9 +398,10 @@ renderTipe(){
   }
 
   handlePost = async () => {
-   // const {name, email, phone, address, website, categoryId, typeId, facebook, instagram, twitter, remarks, userId, source, follower} = this.state
+   // const {name, email, phone, address, website, categoryId, typeId, facebook, instagram, twitter, remarks, userId, source, follower, company} = this.state
     await this.props.addBanner({variables: { 
        name : this.state.name,
+       company : this.state.company,
        email: this.state.email,
        follower: this.state.follower,
        source: this.state.source, 
@@ -404,9 +415,9 @@ renderTipe(){
        twitter: this.state.twitter, 
        remarks: this.state.remarks, 
        userId: this.state.userId,
-      to: this.state.email,
-      text: "Hai",
-      html: "<html> Hai, Apakah Kamu Brand / Merchant Owner dari <strong>"  + this.state.name+ "</strong> <br /> Apakah bisa minta kontaknya! Thanks </html>"
+      // to: this.state.email,
+      // text: "Hai",
+      // html: "<html> Hai, Apakah Kamu Brand / Merchant Owner dari <strong>"  + this.state.name+ "</strong> <br /> Apakah bisa minta kontaknya! Thanks </html>"
 
 }})
 
@@ -416,9 +427,10 @@ renderTipe(){
 
 }
 const addMutation = gql`
-  mutation addBanner($name: String!, $email: String, $address: String, $phone: String, $categoryId: ID, $typeId: ID, $facebook: String, $instagram: String, $website: String, $twitter: String, $remarks: String, $userId: ID, $to: [String!]!,  $html: String, $source: String, $follower: String) {
+  mutation addBanner($name: String!, $email: String, $address: String, $phone: String, $categoryId: ID, $typeId: ID, $facebook: String, $instagram: String, $website: String, $twitter: String, $remarks: String, $userId: ID,  $source: String, $follower: String, $company: String) {
     createBrand(
     name: $name, 
+    company: $company,
     email:$email,
     follower:$follower,
     phone: $phone, 
@@ -437,16 +449,7 @@ const addMutation = gql`
       id
       name
     }
-    sendMailgunEmail(
-      tag: "brand",
-      from: "info@spazee.id",
-      to: $to,
-      subject: "Are U Brand Owner?",
-      text: "",
-      html: $html
-    ) {
-      success
-    }
+  
   }
 `
 const CatQuery = gql`query allBrandCategories {
