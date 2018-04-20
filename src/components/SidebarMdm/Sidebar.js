@@ -32,38 +32,55 @@ class Sidebar extends Component {
               <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="icon-game-controller"></i> Settings</a>
               <ul className="nav-dropdown-items">
                
-               <li className="nav-item">
-                  <NavLink to={'/setting/category/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Main Category</NavLink>
-                </li>
-
+               <li className="nav-item nav-dropdown">
+                <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="fa fa-building-o"></i>Partners</a>
+                <ul className="nav-dropdown-items">
+                  <li className="nav-item">
+                    <NavLink to={'/setting/size/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Size Space</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to={'/setting/collabs/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i>Event Collaboration</NavLink>
+                  </li>
+                   <li className="nav-item">
+                    <NavLink to={'/setting/visitor-type/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Visitor Type</NavLink>
+                  </li>
+                    <li className="nav-item">
+                    <NavLink to={'/setting/facility-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Facility Partners</NavLink>
+                  </li>
                  <li className="nav-item">
-                  <NavLink to={'/setting/collabs/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i>Event Collaboration</NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink to={'/setting/size/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Size Space</NavLink>
-                </li>
-                 <li className="nav-item">
-                  <NavLink to={'/setting/visitor-type/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Visitor Type</NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink to={'/setting/facility-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Facility Partners</NavLink>
-                </li>
-                 <li className="nav-item">
-                  <NavLink to={'/setting/category-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Category Partners</NavLink>
-                </li>
-           
+                    <NavLink to={'/setting/category-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Category Partners</NavLink>
+                  </li>
                 <li className="nav-item">
                   <NavLink to={'/setting/area/all'} className="nav-link" activeClassName="active"><i className="icon-map"></i> Area / Regional</NavLink>
                 </li>
-                 <li className="nav-item">
-                  <NavLink to={'/setting/brand-category/all'} className="nav-link" activeClassName="active"><i className="fa fa-barcode"></i> Brand Category</NavLink>
+                <li className="nav-item">
+                  <NavLink to={'/setting/event-type/all'} className="nav-link" activeClassName="active"><i className="fa fa-calendar"></i> Event Type</NavLink>
                 </li>
+
+                </ul>
+              </li>
+
+              <li className="nav-item nav-dropdown">
+                <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="icon-cup"></i>Brand</a>
+                <ul className="nav-dropdown-items">
+                 
+                 <li className="nav-item">
+                  <NavLink to={'/setting/category/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Main Category</NavLink>
+                </li>
+                  <li className="nav-item">
+                  <NavLink to={'/setting/brand-category/all'} className="nav-link" activeClassName="active"><i className="fa fa-barcode"></i> Sub Category</NavLink>
+                </li>
+               
+                 <li className="nav-item">
+                  <NavLink to={'/setting/rent-type/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Rent Type</NavLink>
+                </li>
+              
                  <li className="nav-item">
                   <NavLink to={'/setting/brand-type/all'} className="nav-link" activeClassName="active"><i className="fa fa-barcode"></i> Brand Type</NavLink>
                 </li>
-                 <li className="nav-item">
-                  <NavLink to={'/setting/event-type/all'} className="nav-link" activeClassName="active"><i className="fa fa-calendar"></i> Event Type</NavLink>
-                </li>
+
+                </ul>
+              </li>
 
 
               </ul>
