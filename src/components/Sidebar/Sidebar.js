@@ -109,6 +109,12 @@ class Sidebar extends Component {
                <li className="nav-item nav-dropdown">
                 <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="fa fa-building-o"></i>Partners</a>
                 <ul className="nav-dropdown-items">
+                 <li className="nav-item">
+                    <NavLink to={'/setting/inclusion/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i>Inclusions</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to={'/setting/exclusion/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i>Exclusions</NavLink>
+                  </li>
                   <li className="nav-item">
                     <NavLink to={'/setting/size/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Size Space</NavLink>
                   </li>
