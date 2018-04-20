@@ -315,6 +315,43 @@ const EditCategoryPartners = Loadable({
   timeout: 10000, // 10 second
 });
 
+const Inclusion = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Inclusion/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewInclusion = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Inclusion/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditInclusion = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Inclusion/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+
+const Exclusion = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Exclusion/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewExclusion = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Exclusion/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditExclusion = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Exclusion/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
 class FullMdm extends Component {
   render() {
     return (
@@ -391,6 +428,15 @@ class FullMdm extends Component {
                 <Route path="/setting/category-partners/all" name="category" component={CategoryPartners}/>
                 <Route path="/setting/category-partners/new" name="New" component={NewCategoryPartners}/>
                 <Route path="/setting/category-partners/edit/:id" name="New" component={EditCategoryPartners}/>
+
+                
+                <Route path="/setting/inclusion/all" name="Size" component={Inclusion}/>
+                <Route path="/setting/inclusion/new" name="New" component={NewInclusion}/>
+                <Route path="/setting/inclusion/edit/:id" name="Edit" component={EditInclusion}/>
+
+                <Route path="/setting/exclusion/all" name="Size" component={Exclusion}/>
+                <Route path="/setting/exclusion/new" name="New" component={NewExclusion}/>
+                <Route path="/setting/exclusion/edit/:id" name="Edit" component={EditExclusion}/>
 
                 <Redirect from="/" to="/dashboard"/>
               </Switch>
