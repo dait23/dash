@@ -79,6 +79,8 @@ const Partner = inject('partnerStore')(
         facilitiesIds: [],
         typesIds:[],
         collabsIds:[],
+        inclusionsIds:[],
+        exclusionsIds:[],
         nearby: '',
         workingHour:'',
         facebook: '',
@@ -96,6 +98,8 @@ const Partner = inject('partnerStore')(
         this.handleChangex = this.handleChangex.bind(this)
         this.handleChangez = this.handleChangez.bind(this)
         this.handleChangeVit = this.handleChangeVit.bind(this)
+        this.handleChangeInc = this.handleChangeInc.bind(this)
+        this.handleChangeExc = this.handleChangeExc.bind(this)
         //this.handleChangeRe = this.handleChangeRe.bind(this)
 
         this.handleSelect = this.handleSelect.bind(this)
@@ -152,8 +156,6 @@ const Partner = inject('partnerStore')(
     this.state.facebook, 
     this.state.facilities, 
     this.state.instagram, 
-    this.state.inclusions, 
-    this.state.exclusions, 
     this.state.avgSpending, 
     this.state.avgVisitor, 
     this.state.userId, 
@@ -163,10 +165,36 @@ const Partner = inject('partnerStore')(
     this.state.lng, 
     this.state.collabsIds, 
     this.state.typesIds,
-    this.state.workingHour
+    this.state.workingHour,
+    this.state.inclusionsIds, 
+    this.state.exclusionsIds, 
 
     );
 
+
+    handleChangeInc (value) {
+
+      const map1 = value.map(x => x.id);
+
+      this.setState({ inclusionsIds: map1 });
+
+
+       console.log('Inclusions:', map1);
+    }
+
+    /////////////////
+
+     handleChangeExc (value) {
+
+      const map1 = value.map(x => x.id);
+
+      this.setState({ exclusionsIds: map1 });
+
+
+       console.log('exclusions:', map1);
+    }
+    
+    ////////////////
    
     
     handleSelectChange (value) {
@@ -275,7 +303,7 @@ renderGeocodeFailure(err) {
       id: 'my-input-id',
     }
 
-        const { error, loading, count, areas, categories, visitors, facilities, events, collabs } = this.props.partnerStore;
+        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions } = this.props.partnerStore;
         console.log(count);
 
         if (error) console.error(error);
@@ -376,8 +404,19 @@ renderGeocodeFailure(err) {
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Inclusions</label>
                     <div className="col-md-9">
                     
-                      <textarea className="form-control" rows="5" value={this.state.inclusions} name="inclusions"
-                         onChange={(e) => this.setState({inclusions: e.target.value})}></textarea>
+                      <Multiselect
+                       onChange={this.handleChangeInc}
+                        data={inclusions.map((inclusionx) => (
+                           
+                           {id: inclusionx.id, name: inclusionx.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Inclusion Partner"
+                        defaultValue={[]}
+                      />
                     </div>
                   </div>
               
@@ -386,8 +425,19 @@ renderGeocodeFailure(err) {
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Exclusion</label>
                     <div className="col-md-9">
                     
-                      <textarea className="form-control" rows="5" value={this.state.exclusions} name="exclusions"
-                         onChange={(e) => this.setState({exclusions: e.target.value})}></textarea>
+                       <Multiselect
+                       onChange={this.handleChangeExc}
+                        data={exclusions.map((exclusionx) => (
+                           
+                           {id: exclusionx.id, name: exclusionx.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Exclusion Partner"
+                        defaultValue={[]}
+                      />
                     </div>
                   </div>
               

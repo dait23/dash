@@ -72,14 +72,16 @@ const Partner = inject('partnerStore')(
         lng: '',
         peakHour: '',
         partnerId: 'cjdysomf1sf0h0159w4r1erz3',
-        inclusions: '',
-        exclusions: '',
+        inclusions: [],
+        exclusions: [],
         categoryId: '',
         userId: localStorage.getItem('uid'),
         areaId: '',
         facilitiesIds: [],
         typesIds:[],
         collabsIds:[],
+        inclusionsIds:[],
+        exclusionsIds:[],
         nearby: '',
         workingHour:'',
         facebook: '',
@@ -98,6 +100,8 @@ const Partner = inject('partnerStore')(
         this.handleChangez = this.handleChangez.bind(this)
         this.handleChangeVit = this.handleChangeVit.bind(this)
         //this.handleChangeRe = this.handleChangeRe.bind(this)
+         this.handleChangeInc = this.handleChangeInc.bind(this)
+        this.handleChangeExc = this.handleChangeExc.bind(this)
 
         this.handleSelect = this.handleSelect.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -154,8 +158,6 @@ const Partner = inject('partnerStore')(
     this.state.facebook, 
     this.state.facilities, 
     this.state.instagram, 
-    this.state.inclusions, 
-    this.state.exclusions, 
     this.state.avgSpending, 
     this.state.avgVisitor, 
     this.state.userId, 
@@ -165,7 +167,9 @@ const Partner = inject('partnerStore')(
     this.state.lng, 
     this.state.collabsIds, 
     this.state.typesIds,
-    this.state.workingHour
+    this.state.workingHour,
+    this.state.inclusionsIds, 
+    this.state.exclusionsIds, 
 
     );
 
@@ -195,8 +199,14 @@ const Partner = inject('partnerStore')(
               peakHour
               picName
               picPhone
-              inclusions
-              exclusions
+              inclusions{
+                id
+                name
+              }
+              exclusions{
+                id
+                name
+              }
               website
               status
               workingHour
@@ -248,7 +258,7 @@ const Partner = inject('partnerStore')(
             //var BlogCategory = results.data.BlogCategory
 
             that.setState({
-               data : results.data.Partner,
+              data : results.data.Partner,
               id:results.data.Partner.id,
               name:results.data.Partner.name,
               address:results.data.Partner.address,
@@ -278,15 +288,39 @@ const Partner = inject('partnerStore')(
               types:results.data.Partner.types,
               collabsIds:results.data.Partner.collabs.id,
               collabs:results.data.Partner.collabs,
+              inclusions:results.data.Partner.inclusions,
+              exclusions:results.data.Partner.exclusions,
               loading:false
              });
             
-           
+             //console.log(that.state.inclusions);
            
           })
        
 
   }
+
+    handleChangeInc (value) {
+
+      const map1 = value.map(x => x.id);
+
+      this.setState({ inclusionsIds: map1 });
+
+
+       console.log('Inclusions:', map1);
+    }
+
+    /////////////////
+
+     handleChangeExc (value) {
+
+      const map1 = value.map(x => x.id);
+
+      this.setState({ exclusionsIds: map1 });
+
+
+       console.log('exclusions:', map1);
+    }
    
     
     handleSelectChange (value) {
@@ -394,7 +428,7 @@ renderGeocodeFailure(err) {
       id: 'my-input-id',
     }
 
-        const { error, loading, count, areas, categories, visitors, facilities, events, collabs } = this.props.partnerStore;
+        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions } = this.props.partnerStore;
 
         if (error) console.error(error);
         else if (loading) return(
@@ -493,8 +527,24 @@ renderGeocodeFailure(err) {
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Inclusions</label>
                     <div className="col-md-9">
                     
-                      <textarea className="form-control" rows="5" value={this.state.inclusions} name="inclusions"
-                         onChange={(e) => this.setState({inclusions: e.target.value})}></textarea>
+                     <Multiselect
+                       onChange={this.handleChangeInc}
+                        data={inclusions.map((inclusionx) => (
+                           
+                           {id: inclusionx.id, name: inclusionx.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Inclusion Partner"
+                        defaultValue={this.state.inclusions.map((inclusion) => (
+                           
+                           {id: inclusion.id, name: inclusion.name}
+
+                         
+                          ))}
+                      />
                     </div>
                   </div>
               
@@ -503,8 +553,24 @@ renderGeocodeFailure(err) {
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Exclusion</label>
                     <div className="col-md-9">
                     
-                      <textarea className="form-control" rows="5" value={this.state.exclusions} name="exclusions"
-                         onChange={(e) => this.setState({exclusions: e.target.value})}></textarea>
+                      <Multiselect
+                       onChange={this.handleChangeExc}
+                        data={exclusions.map((exclusionx) => (
+                           
+                           {id: exclusionx.id, name: exclusionx.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Exclusion Partner"
+                        defaultValue={this.state.exclusions.map((exclusion) => (
+                           
+                           {id: exclusion.id, name: exclusion.name}
+
+                         
+                          ))}
+                      />
                     </div>
                   </div>
               
