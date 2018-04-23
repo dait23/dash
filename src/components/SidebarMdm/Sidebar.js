@@ -20,7 +20,7 @@ class Sidebar extends Component {
 
   renderSetting(){
 
-    if(window.localStorage.getItem('urole') === 'Mdm' && window.localStorage.getItem('uname') === 'Vidra'){
+    if(window.localStorage.getItem('urole') === 'Mdm'){
 
       return (
         <div>
