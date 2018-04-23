@@ -41,6 +41,7 @@ class AddEditSpace extends Component {
     this.state = { 
       id:'',
     description: '',
+     remarks:'',
     title: '',
     slug:'',
     imageUrl:'',
@@ -58,6 +59,7 @@ class AddEditSpace extends Component {
     this.handleDes = this.handleDes.bind(this)
     this.onUpdatePress = this.onUpdatePress.bind(this);
     this.handleChangex = this.handleChangex.bind(this)
+     this.handleChangez = this.handleChangez.bind(this)
      this.handleChangeRent = this.handleChangeRent.bind(this)
   }
   
@@ -106,6 +108,9 @@ class AddEditSpace extends Component {
   
     handleDes(value) {
     this.setState({ description: value});
+  }
+   handleChangez(value) {
+    this.setState({ remarks: value })
   }
  
  handleChangeRent = (rentId) => {
@@ -166,6 +171,7 @@ class AddEditSpace extends Component {
               title
               slug
               description
+              remarks
               price
               imageId
               imageUrl
@@ -209,6 +215,7 @@ class AddEditSpace extends Component {
               imageUrl:results.data.Space.imageUrl,
               imageId:results.data.Space.imageId,
               description:results.data.Space.description,
+              remarks:results.data.Space.remarks,
               partnerId:results.data.Space.partner.id,
               wideId:results.data.Space.wide.id,
               rentId:results.data.Space.rent.id,
@@ -226,8 +233,8 @@ class AddEditSpace extends Component {
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price: String, $imageId: String, $imageUrl: String, $description: String, $partnerId: ID, $rentId: ID){
-              updateSpace (id: $id, title: $title, slug: $slug, price: $price, imageId: $imageId, imageUrl: $imageUrl, description: $description, partnerId: $partnerId, rentId: $rentId){
+            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price: String, $imageId: String, $imageUrl: String, $description: String, $remarks: String,  $partnerId: ID, $rentId: ID){
+              updateSpace (id: $id, title: $title, slug: $slug, price: $price, imageId: $imageId, imageUrl: $imageUrl, description: $description, remarks: $remarks, partnerId: $partnerId, rentId: $rentId){
                 id           
               }
             }
@@ -241,7 +248,8 @@ class AddEditSpace extends Component {
             rentId: this.state.rentId,
             imageUrl: this.state.imageUrl,
             imageId: this.state.imageId,
-            description: this.state.description 
+            description: this.state.description,
+            remarks: this.state.remarks
           }
           var opts = {
             // custom fetch options
@@ -410,6 +418,24 @@ renderRent(){
                      
                     </div>
                   </div>
+
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Remarks</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.remarks}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="remarks"
+                    onChange={this.handleChangez}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>      
       
                  
                  

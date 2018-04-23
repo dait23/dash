@@ -29,6 +29,7 @@ class AddSpace extends Component {
     super(props)
     this.state = { 
     description: '',
+    remarks:'',
     title: '',
     slug:'',
     imageUrl:'',
@@ -44,6 +45,7 @@ class AddSpace extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handlePost = this.handlePost.bind(this)
      this.handleChangex = this.handleChangex.bind(this)
+      this.handleChangez = this.handleChangez.bind(this)
      this.handleChangeRent = this.handleChangeRent.bind(this)
   }
 
@@ -104,6 +106,9 @@ class AddSpace extends Component {
 
   handleChange(value) {
     this.setState({ description: value })
+  }
+   handleChangez(value) {
+    this.setState({ remarks: value })
   }
 
 
@@ -298,7 +303,24 @@ if (this.props.data.loading) {
                      
                     </div>
                   </div>
-      
+                  
+                    <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Remarks</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.remarks}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="remarks"
+                    onChange={this.handleChangez}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>      
                  
                  
                   <div className="form-group row">
@@ -338,8 +360,8 @@ if (this.props.data.loading) {
   }
 
   handlePost = async () => {
-    const {title, slug, price, description, imageUrl, imageId,  partnerId, wideId, rentId} = this.state
-    await this.props.addBanner({variables: { title, slug, price, description, imageUrl, imageId,  partnerId, wideId, rentId}})
+    const {title, slug, price, description, remarks, imageUrl, imageId,  partnerId, wideId, rentId} = this.state
+    await this.props.addBanner({variables: { title, slug, price, description, remarks, imageUrl, imageId,  partnerId, wideId, rentId}})
 
 
    toast('Add Space Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000))
@@ -352,6 +374,7 @@ const addMutation = gql`
   $title:String, 
   $slug:String, 
   $description: String, 
+  $remarks: String, 
   $price: String, 
   $partnerId: ID,
   $wideId: ID,
@@ -367,6 +390,7 @@ const addMutation = gql`
     title: $title
     slug: $slug
     description:$description
+    remarks:$remarks
     price: $price
     partnerId:$partnerId
     imageUrl: $imageUrl
