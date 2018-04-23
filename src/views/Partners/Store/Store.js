@@ -351,7 +351,7 @@ const partnerStore = new class {
         variables: { name, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
         refetchQueries: [{ query: allTeamQuery }]
       })
-      .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))
+      .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }))
       .catch(error => toast(error.message, { type: toast.TYPE.ERROR, autoClose: 2000 }, console.log(error.message)));
 
 /////////////updated
