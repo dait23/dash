@@ -147,6 +147,7 @@ const Partner = inject('partnerStore')(
    handlePost = () => this.props.partnerStore.updatePartner(
     this.state.id,
     this.state.name, 
+    this.state.slug,
     this.state.areaId,
     this.state.categoryId, 
     this.state.address, 
@@ -192,6 +193,7 @@ const Partner = inject('partnerStore')(
               Partner(id: $id){
               id
               name
+              slug
               address
               avgVisitor
               avgSpending
@@ -261,6 +263,7 @@ const Partner = inject('partnerStore')(
               data : results.data.Partner,
               id:results.data.Partner.id,
               name:results.data.Partner.name,
+              slug:results.data.Partner.slug,
               address:results.data.Partner.address,
               lat:results.data.Partner.lat,
               lng:results.data.Partner.lng,

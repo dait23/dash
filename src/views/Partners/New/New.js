@@ -144,7 +144,8 @@ const Partner = inject('partnerStore')(
 
 
    handlePost = () => this.props.partnerStore.createPartner(
-    this.state.name, 
+    this.state.name,
+    this.state.slug,  
     this.state.areaId,
     this.state.categoryId, 
     this.state.address, 

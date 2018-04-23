@@ -149,6 +149,7 @@ const allEventQuery = gql`
 const createPartnerMutation = gql`
   mutation createPartner(
       $name: String,
+      $slug: String,
       $address: String,
       $picName: String,
       $picPhone: String,
@@ -175,7 +176,8 @@ const createPartnerMutation = gql`
     
       ) {
     createPartner(
-        name: $name, 
+        name: $name,
+        slug:$slug, 
         areaId: $areaId, 
         categoryId: $categoryId,
         address:$address,
@@ -208,6 +210,7 @@ const updatePartnerMutation = gql`
   mutation updatePartner(
       $id: ID!,
       $name: String,
+      $slug: String,
       $address: String,
       $picName: String,
       $picPhone: String,
@@ -235,7 +238,8 @@ const updatePartnerMutation = gql`
       ) {
     updatePartner(
         id: $id,
-        name: $name, 
+        name: $name,
+        slug: $slug, 
         areaId: $areaId, 
         categoryId: $categoryId,
         address:$address,
@@ -344,23 +348,23 @@ const partnerStore = new class {
 
   }
 
-  createPartner = (name, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds) =>
+  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds) =>
     client
       .mutate({
         mutation: createPartnerMutation,
-        variables: { name, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
+        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
         refetchQueries: [{ query: allTeamQuery }]
       })
-      .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }))
+      .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))
       .catch(error => toast(error.message, { type: toast.TYPE.ERROR, autoClose: 2000 }, console.log(error.message)));
 
 /////////////updated
 
-updatePartner = (id, name, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds) =>
+updatePartner = (id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds) =>
     client
       .mutate({
         mutation: updatePartnerMutation,
-        variables: { id, name, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
+        variables: { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
         refetchQueries: [{ query: allTeamQuery }]
       })
       .then(() => console.log('Update partners ..'), toast('Update Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))
