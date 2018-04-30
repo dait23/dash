@@ -145,6 +145,16 @@ const allEventQuery = gql`
   }
 `;
 
+const allDaysQuery = gql`
+  {
+    allDays {
+      id
+      name
+      
+     }
+  }
+`;
+
 
 const createPartnerMutation = gql`
   mutation createPartner(
@@ -171,7 +181,11 @@ const createPartnerMutation = gql`
       $typesIds: [ID!],
       $workingHour: String,
       $exclusionsIds: [ID!],
-      $inclusionsIds: [ID!]
+      $inclusionsIds: [ID!],
+      $ownerName: String,
+      $ownerPhone: String,
+      $remarks: String,
+      $daysIds: [ID!],
     
     
       ) {
@@ -199,7 +213,11 @@ const createPartnerMutation = gql`
         lng: $lng,
         collabsIds: $collabsIds, 
         typesIds: $typesIds,
-        workingHour: $workingHour
+        workingHour: $workingHour,
+        ownerName: $ownerName,
+        ownerPhone: $ownerPhone,
+        remarks: $remarks,
+        daysIds: $daysIds
         ) {
       id
     }
@@ -232,7 +250,11 @@ const updatePartnerMutation = gql`
       $typesIds: [ID!],
       $workingHour: String,
       $exclusionsIds: [ID!],
-      $inclusionsIds: [ID!]
+      $inclusionsIds: [ID!],
+      $ownerName: String,
+      $ownerPhone: String,
+      $remarks: String,
+       $daysIds: [ID!],
     
     
       ) {
@@ -261,7 +283,12 @@ const updatePartnerMutation = gql`
         lng: $lng,
         collabsIds: $collabsIds, 
         typesIds: $typesIds,
-        workingHour: $workingHour
+        workingHour: $workingHour,
+        ownerName: $ownerName,
+        ownerPhone: $ownerPhone,
+        remarks: $remarks,
+        daysIds: $daysIds
+      
         ) {
       id
     }
@@ -284,6 +311,9 @@ const partnerStore = new class {
       },
       get allQueryArea() {
         return graphql({ client, query: allAreaQuery });
+      },
+       get allQueryDay() {
+        return graphql({ client, query: allDaysQuery });
       },
        get allQueryCategory() {
         return graphql({ client, query: allCategoryQuery });
@@ -318,6 +348,9 @@ const partnerStore = new class {
       get areas() {
          return (this.allQueryArea.data.allAreas && toJS(this.allQueryArea.data.allAreas)) || [];
        },
+        get days() {
+         return (this.allQueryDay.data.allDays && toJS(this.allQueryDay.data.allDays)) || [];
+       },
       get categories() {
          return (this.allQueryCategory.data.allPartnerCategories && toJS(this.allQueryCategory.data.allPartnerCategories)) || [];
        },
@@ -348,11 +381,11 @@ const partnerStore = new class {
 
   }
 
-  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds) =>
+  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds) =>
     client
       .mutate({
         mutation: createPartnerMutation,
-        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
+        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds},
         refetchQueries: [{ query: allTeamQuery }]
       })
       .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))
@@ -360,11 +393,11 @@ const partnerStore = new class {
 
 /////////////updated
 
-updatePartner = (id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds) =>
+updatePartner = (id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds) =>
     client
       .mutate({
         mutation: updatePartnerMutation,
-        variables: { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds},
+        variables: { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds,  ownerName, ownerPhone, remarks, daysIds},
         refetchQueries: [{ query: allTeamQuery }]
       })
       .then(() => console.log('Update partners ..'), toast('Update Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))

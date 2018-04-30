@@ -66,25 +66,22 @@ const Partner = inject('partnerStore')(
         slug:'',
         picName: '',
         picPhone: '',
+        ownerName: '',
+        ownerPhone: '',
         avgVisitor: '',
         avgSpending: '',
         lat: '',
         lng: '',
         peakHour: '',
         partnerId: 'cjdysomf1sf0h0159w4r1erz3',
-        inclusions: [],
-        exclusions: [],
         categoryId: '',
         userId: localStorage.getItem('uid'),
         areaId: '',
-        facilitiesIds: [],
-        typesIds:[],
-        collabsIds:[],
-        inclusionsIds:[],
-        exclusionsIds:[],
+        visitors:[],
         nearby: '',
         workingHour:'',
         facebook: '',
+        daysx:[],
         instagram: '',
         website: '',
         imageUrl:'',
@@ -94,6 +91,7 @@ const Partner = inject('partnerStore')(
         }
         //this.handleChange = this.handleChange.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
+        this.handleSelectChangeDay = this.handleSelectChangeDay.bind(this)
          this.handleSelectChangeEvent = this.handleSelectChangeEvent.bind(this)
         this.handleSelectChangeCollab = this.handleSelectChangeCollab.bind(this)
         this.handleChangex = this.handleChangex.bind(this)
@@ -107,7 +105,19 @@ const Partner = inject('partnerStore')(
     this.handleChange = this.handleChange.bind(this)
         
       }
+
+
    ////
+
+    handleSelectChangeDay (value) {
+
+    const map1 = value.map(x => x.id);
+    this.setState({ daysIds: map1 });
+
+
+     console.log('You\'ve selectedxx:', map1);
+  }
+
 
  handleSelect(address) {
     this.setState({
@@ -170,7 +180,11 @@ const Partner = inject('partnerStore')(
     this.state.typesIds,
     this.state.workingHour,
     this.state.inclusionsIds, 
-    this.state.exclusionsIds, 
+    this.state.exclusionsIds,
+    this.state.ownerName,
+    this.state.ownerPhone,
+    this.state.remarks, 
+    this.state.daysIds
 
     );
 
@@ -201,11 +215,18 @@ const Partner = inject('partnerStore')(
               peakHour
               picName
               picPhone
+              ownerName
+              ownerPhone
+              remarks
               inclusions{
                 id
                 name
               }
               exclusions{
+                id
+                name
+              }
+              days{
                 id
                 name
               }
@@ -273,6 +294,9 @@ const Partner = inject('partnerStore')(
               peakHour:results.data.Partner.peakHour,
               picName:results.data.Partner.picName,
               picPhone:results.data.Partner.picPhone,
+              ownerName:results.data.Partner.ownerName,
+              remarks:results.data.Partner.remarks,
+              ownerPhone:results.data.Partner.ownerPhone,
               inclusions:results.data.Partner.inclusions,
               exclusions:results.data.Partner.exclusions,
               website:results.data.Partner.website,
@@ -283,7 +307,7 @@ const Partner = inject('partnerStore')(
               instagram:results.data.Partner.instagram,
               areaId:results.data.Partner.area.id,
               visitorsIds:results.data.Partner.visitors.id,
-              visitorsx:results.data.Partner.visitors,
+              visitors:results.data.Partner.visitors,
               facilitiesIds:results.data.Partner.facilities.id,
               facilities:results.data.Partner.facilities,
               categoryId:results.data.Partner.category.id,
@@ -300,7 +324,6 @@ const Partner = inject('partnerStore')(
            
           })
        
-
   }
 
     handleChangeInc (value) {
@@ -409,6 +432,12 @@ renderGeocodeFailure(err) {
  //////////////////////
 
       render() {
+            const inList = this.state.inclusions || [ ]
+           const exList = this.state.exclusions || [ ]
+           const viList = this.state.visitors || [ ]
+
+        console.log(viList);
+          
      var sluger =  slugify(this.state.name , {
                 replacement: '-',    // replace spaces with replacement
                 remove: /[$*_+~.()'"!\-:@,]/g,        // regex to remove characters
@@ -431,7 +460,7 @@ renderGeocodeFailure(err) {
       id: 'my-input-id',
     }
 
-        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions } = this.props.partnerStore;
+        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions, days } = this.props.partnerStore;
 
         if (error) console.error(error);
         else if (loading) return(
@@ -440,6 +469,8 @@ renderGeocodeFailure(err) {
 
           );
         else if (count === 0) console.warn('No Partner :(');
+    
+
         return (
 
         
@@ -486,6 +517,22 @@ renderGeocodeFailure(err) {
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.picPhone} name="picPhone" className="form-control" placeholder="pic Phone"
                       onChange={(e) => this.setState({picPhone: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Name</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.ownerName} name="ownerName" className="form-control" placeholder="owner name"
+                      onChange={(e) => this.setState({ownerName: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Phone</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.ownerPhone} name="ownerPhone" className="form-control" placeholder="owner Phone"
+                      onChange={(e) => this.setState({ownerPhone: e.target.value})}
                       />
                     </div>
                   </div>
@@ -541,7 +588,7 @@ renderGeocodeFailure(err) {
                         valueField='id'
                         textField='name'
                         placeholder="Select Inclusion Partner"
-                        defaultValue={this.state.inclusions.map((inclusion) => (
+                        defaultValue={inList.map((inclusion) => (
                            
                            {id: inclusion.id, name: inclusion.name}
 
@@ -567,7 +614,7 @@ renderGeocodeFailure(err) {
                         valueField='id'
                         textField='name'
                         placeholder="Select Exclusion Partner"
-                        defaultValue={this.state.exclusions.map((exclusion) => (
+                        defaultValue={exList.map((exclusion) => (
                            
                            {id: exclusion.id, name: exclusion.name}
 
@@ -677,9 +724,9 @@ renderGeocodeFailure(err) {
                         valueField='id'
                         textField='name'
                         placeholder="Select Visitor Type"
-                        defaultValue={visitors.map((visitor) => (
+                        defaultValue={viList.map((visitorx) => (
                            
-                           {id: visitor.id, name: visitor.name}
+                           {id: visitorx.id, name: visitorx.name}
 
                          
                           ))}
@@ -765,10 +812,20 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                     <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Working Hour</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Busy Day</label>
                     <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.workingHour} name="workingHour" className="form-control" placeholder="Working Hour"
-                      onChange={(e) => this.setState({workingHour: e.target.value})}
+                      <Multiselect
+                       onChange={this.handleSelectChangeDay}
+                        data={days.map((day) => (
+                           
+                           {id: day.id, name: day.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Busy Day"
+                        defaultValue={[]}
                       />
                     </div>
                   </div>
@@ -799,12 +856,20 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                 
-              
+               <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Remarks</label>
+                    <div className="col-md-9">
+                        <textarea className="form-control" rows="5" value={this.state.remarks} name="remarks"
+                         onChange={(e) => this.setState({remarks: e.target.value})}></textarea>
+                    
+                    </div>
+                  </div>
+                 
                   
 
                    </div>
                 </div>
-                
+                 
                  
       
                   

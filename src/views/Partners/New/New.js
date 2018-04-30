@@ -64,6 +64,9 @@ const Partner = inject('partnerStore')(
         slug:'',
         picName: '',
         picPhone: '',
+        ownerName: '',
+        ownerPhone: '',
+        remarks:'',
         avgVisitor: '',
         avgSpending: '',
         lat: '',
@@ -81,6 +84,7 @@ const Partner = inject('partnerStore')(
         collabsIds:[],
         inclusionsIds:[],
         exclusionsIds:[],
+        daysIds:[],
         nearby: '',
         workingHour:'',
         facebook: '',
@@ -93,10 +97,12 @@ const Partner = inject('partnerStore')(
         }
         //this.handleChange = this.handleChange.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
+          this.handleSelectChangeDay = this.handleSelectChangeDay.bind(this)
          this.handleSelectChangeEvent = this.handleSelectChangeEvent.bind(this)
         this.handleSelectChangeCollab = this.handleSelectChangeCollab.bind(this)
         this.handleChangex = this.handleChangex.bind(this)
         this.handleChangez = this.handleChangez.bind(this)
+         // this.handleChangeDay = this.handleChangeDay.bind(this)
         this.handleChangeVit = this.handleChangeVit.bind(this)
         this.handleChangeInc = this.handleChangeInc.bind(this)
         this.handleChangeExc = this.handleChangeExc.bind(this)
@@ -166,9 +172,13 @@ const Partner = inject('partnerStore')(
     this.state.lng, 
     this.state.collabsIds, 
     this.state.typesIds,
-    this.state.workingHour,
+    this.state.dayId,
     this.state.inclusionsIds, 
-    this.state.exclusionsIds, 
+    this.state.exclusionsIds,
+    this.state.ownerName,
+    this.state.ownerPhone,
+    this.state.remarks,
+    this.state.daysIds  
 
     );
 
@@ -202,6 +212,17 @@ const Partner = inject('partnerStore')(
 
     const map1 = value.map(x => x.id);
     this.setState({ facilitiesIds: map1 });
+
+
+     console.log('You\'ve selectedxx:', map1);
+  }
+
+
+  
+    handleSelectChangeDay (value) {
+
+    const map1 = value.map(x => x.id);
+    this.setState({ daysIds: map1 });
 
 
      console.log('You\'ve selectedxx:', map1);
@@ -246,6 +267,14 @@ const Partner = inject('partnerStore')(
         });
         console.log(`area: ${areaId.value}`);
       }
+
+
+      //  handleChangeDay = (dayId) => {
+      //   this.setState({ 
+      //     dayId:dayId.value
+      //   });
+      //   console.log(`day: ${dayId.value}`);
+      // }
 
      handleChangeVit (value) {
 
@@ -304,7 +333,7 @@ renderGeocodeFailure(err) {
       id: 'my-input-id',
     }
 
-        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions } = this.props.partnerStore;
+        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions, days } = this.props.partnerStore;
         console.log(count);
 
         if (error) console.error(error);
@@ -361,6 +390,22 @@ renderGeocodeFailure(err) {
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.picPhone} name="picPhone" className="form-control" placeholder="pic Phone"
                       onChange={(e) => this.setState({picPhone: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Name</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.ownerName} name="ownerName" className="form-control" placeholder="owner name"
+                      onChange={(e) => this.setState({ownerName: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Phone</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.ownerPhone} name="ownerPhone" className="form-control" placeholder="owner Phone"
+                      onChange={(e) => this.setState({ownerPhone: e.target.value})}
                       />
                     </div>
                   </div>
@@ -610,10 +655,20 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                     <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Working Hour</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Busy Day</label>
                     <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.workingHour} name="workingHour" className="form-control" placeholder="Working Hour"
-                      onChange={(e) => this.setState({workingHour: e.target.value})}
+                       <Multiselect
+                       onChange={this.handleSelectChangeDay}
+                        data={days.map((day) => (
+                           
+                           {id: day.id, name: day.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Busy Day"
+                        defaultValue={[]}
                       />
                     </div>
                   </div>
@@ -643,7 +698,16 @@ renderGeocodeFailure(err) {
                       />
                     </div>
                   </div>
-                
+                  
+
+               <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Remarks</label>
+                    <div className="col-md-9">
+                        <textarea className="form-control" rows="5" value={this.state.remarks} name="remarks"
+                         onChange={(e) => this.setState({remarks: e.target.value})}></textarea>
+                    
+                    </div>
+                  </div>
               
                   
 
