@@ -49,7 +49,9 @@ class AddEditSpace extends Component {
       wideId:'',
       rentId:'',
     partnerId: '',
-    price:'',
+    price1:'',
+    price7:'',
+    price30:'',
     datax:[],
     loading: true,
     uploadedFile: null
@@ -172,7 +174,9 @@ class AddEditSpace extends Component {
               slug
               description
               remarks
-              price
+              price1
+              price7
+              price30
               imageId
               imageUrl
               partner{
@@ -211,7 +215,9 @@ class AddEditSpace extends Component {
               id:results.data.Space.id,
               title:results.data.Space.title,
               slug:results.data.Space.slug,
-              price:results.data.Space.price,
+              price1:results.data.Space.price1,
+              price7:results.data.Space.price7,
+              price30:results.data.Space.price30,
               imageUrl:results.data.Space.imageUrl,
               imageId:results.data.Space.imageId,
               description:results.data.Space.description,
@@ -233,8 +239,8 @@ class AddEditSpace extends Component {
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price: String, $imageId: String, $imageUrl: String, $description: String, $remarks: String,  $partnerId: ID, $rentId: ID){
-              updateSpace (id: $id, title: $title, slug: $slug, price: $price, imageId: $imageId, imageUrl: $imageUrl, description: $description, remarks: $remarks, partnerId: $partnerId, rentId: $rentId){
+            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price1: String, $price7: String, $price30: String, $imageId: String, $imageUrl: String, $description: String, $remarks: String,  $partnerId: ID, $rentId: ID){
+              updateSpace (id: $id, title: $title, slug: $slug, price1: $price1, price7: $price7, price30: $price30, imageId: $imageId, imageUrl: $imageUrl, description: $description, remarks: $remarks, partnerId: $partnerId, rentId: $rentId){
                 id           
               }
             }
@@ -243,7 +249,9 @@ class AddEditSpace extends Component {
             id: this.state.id,
             title: this.state.title,
             slug: this.state.slug,
-            price: this.state.price,
+            price1: this.state.price1,
+            price7: this.state.price7,
+            price30: this.state.price30,
             partnerId: this.state.partnerId,
             rentId: this.state.rentId,
             imageUrl: this.state.imageUrl,
@@ -391,14 +399,32 @@ renderRent(){
                     </div>
                   </div>
 
+                  
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Price</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / hari</label>
                     <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.price} name="price" className="form-control" placeholder="price space"
-                      onChange={(e) => this.setState({price: e.target.value})}
+                      <input type="text" id="text-input" value={this.state.price1} name="price1" className="form-control" placeholder="Harga / hari"
+                      onChange={(e) => this.setState({price1: e.target.value})}
                       />
                     </div>
                   </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / minggu</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.price7} name="price7" className="form-control" placeholder="Harga / minggu"
+                      onChange={(e) => this.setState({price7: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / bulan</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.price30} name="price30" className="form-control" placeholder="Harga / bulan"
+                      onChange={(e) => this.setState({price30: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                 
                  
                  
                   <div className="form-group row">

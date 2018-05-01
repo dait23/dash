@@ -269,18 +269,27 @@ if (this.props.data.loading) {
                     </div>
                   </div>
 
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Waktu Sewa</label>
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / hari</label>
                     <div className="col-md-9">
-                       {this.renderRent()}
+                      <input type="text" id="text-input" value={this.state.price1} name="price1" className="form-control" placeholder="Harga / hari"
+                      onChange={(e) => this.setState({price1: e.target.value})}
+                      />
                     </div>
                   </div>
-
-                  <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Price</label>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / minggu</label>
                     <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.price} name="price" className="form-control" placeholder="price space"
-                      onChange={(e) => this.setState({price: e.target.value})}
+                      <input type="text" id="text-input" value={this.state.price7} name="price7" className="form-control" placeholder="Harga / minggu"
+                      onChange={(e) => this.setState({price7: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / bulan</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.price30} name="price30" className="form-control" placeholder="Harga / bulan"
+                      onChange={(e) => this.setState({price30: e.target.value})}
                       />
                     </div>
                   </div>
@@ -360,8 +369,8 @@ if (this.props.data.loading) {
   }
 
   handlePost = async () => {
-    const {title, slug, price, description, remarks, imageUrl, imageId,  partnerId, wideId, rentId} = this.state
-    await this.props.addBanner({variables: { title, slug, price, description, remarks, imageUrl, imageId,  partnerId, wideId, rentId}})
+    const {title, slug, price1, price7, price30, description, remarks, imageUrl, imageId,  partnerId, wideId, rentId} = this.state
+    await this.props.addBanner({variables: { title, slug,  description, remarks, imageUrl, imageId,  partnerId, wideId, rentId, price1, price7, price30}})
 
 
    toast('Add Space Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000))
@@ -375,7 +384,9 @@ const addMutation = gql`
   $slug:String, 
   $description: String, 
   $remarks: String, 
-  $price: String, 
+  $price1: String, 
+  $price7: String,
+  $price30: String,  
   $partnerId: ID,
   $wideId: ID,
   $rentId: ID,
@@ -391,7 +402,9 @@ const addMutation = gql`
     slug: $slug
     description:$description
     remarks:$remarks
-    price: $price
+    price1: $price1
+    price7: $price7
+    price30: $price30
     partnerId:$partnerId
     imageUrl: $imageUrl
     imageId: $imageId

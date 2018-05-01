@@ -61,6 +61,7 @@ const Partner = inject('partnerStore')(
         geocodeResults: null,
         loading: false,
         name: '',
+        uid:'',
         slug:'',
         picName: '',
         picPhone: '',
@@ -71,7 +72,6 @@ const Partner = inject('partnerStore')(
         avgSpending: '',
         lat: '',
         lng: '',
-        peakHour: '',
         partnerId: 'cjdysomf1sf0h0159w4r1erz3',
         inclusions: '',
         exclusions: '',
@@ -158,7 +158,6 @@ const Partner = inject('partnerStore')(
     this.state.picName, 
     this.state.picPhone, 
     this.state.nearby, 
-    this.state.peakHour, 
     this.state.website, 
     this.state.facebook, 
     this.state.facilities, 
@@ -178,7 +177,8 @@ const Partner = inject('partnerStore')(
     this.state.ownerName,
     this.state.ownerPhone,
     this.state.remarks,
-    this.state.daysIds  
+    this.state.daysIds,
+    this.state.uId,  
 
     );
 
@@ -367,6 +367,16 @@ renderGeocodeFailure(err) {
                      
                     </div>
                   </div>
+
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Partner ID</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.uId} name="uId" className="form-control" placeholder="partner ID"
+                      onChange={(e) => this.setState({uId: e.target.value})}
+
+                      />
+                    </div>
+                  </div>
                            
                   <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Partner Name</label>
@@ -427,14 +437,7 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
 
-                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Peak Hours</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.peakHour} name="peakHour" className="form-control" placeholder="peak hours"
-                      onChange={(e) => this.setState({peakHour: e.target.value})}
-                      />
-                    </div>
-                  </div>
+                   
                   
                     <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">NearBy</label>
