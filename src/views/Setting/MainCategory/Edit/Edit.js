@@ -4,12 +4,12 @@ import { Link} from 'react-router-dom'
 import {MainApi} from '../../../../views/Api/';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
+//const history = createBrowserHistory();
 
 
 
 
-
-class EditCategoryPartners extends Component {
+class EditCategory extends Component {
 
   static propTypes = {
     router: PropTypes.object,
@@ -23,8 +23,6 @@ class EditCategoryPartners extends Component {
     id: '',
     name: '',
     slug: '',
-    mainCategoryId:'',
-     datax:[],
     loading: true
     }
    
@@ -35,7 +33,6 @@ class EditCategoryPartners extends Component {
   componentDidMount() {
     var that = this;
     that.getData();
-    that.getMain();
       
   }
 
@@ -49,14 +46,10 @@ class EditCategoryPartners extends Component {
 
           var query = `
             query Brand($id: ID!) {
-              PartnerCategory(id: $id){
+              MainCategory(id: $id){
               id
               name
               slug
-              mainCategory{
-                id
-                name
-              }
             }
             }
           `
@@ -76,11 +69,10 @@ class EditCategoryPartners extends Component {
             //var BlogCategory = results.data.BlogCategory
 
             that.setState({
-              data : results.data.PartnerCategory,
-              id:results.data.PartnerCategory.id,
-              name:results.data.PartnerCategory.name,
-              slug:results.data.PartnerCategory.slug,
-              mainCategoryId:results.data.PartnerCategory.mainCategory.id,
+              data : results.data.MainCategory,
+              id:results.data.MainCategory.id,
+              name:results.data.MainCategory.name,
+              slug:results.data.MainCategory.slug,
               loading:false
              });
             //...
@@ -88,54 +80,14 @@ class EditCategoryPartners extends Component {
 
   }
 
-
-  getMain(){
-     var that = this;
-     that.setState({
-          loading: true
-      });
-     var fetch = require('graphql-fetch')(MainApi)
-
-          var query = `
-            query Brand {
-            allPartnerMainCategories{
-              id
-              name
-            }
-            }
-          `
-          var queryVars = {
-           // id: this.props.match.params.id
-          }
-          var opts = {
-            // custom fetch options
-          }
-
-
-          fetch(query, queryVars, opts).then(function (results) {
-            if (results.errors) {
-              //...
-              return
-            }
-            //var BlogCategory = results.data.BlogCategory
-
-            that.setState({
-              datax : results.data.allPartnerMainCategories,
-              loading:false
-             });
-            //...
-          })
-
-  }/////////////////
-
   onUpdatePress() {
 
      var that = this;
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            mutation updatePartnerCategory ($id: ID!, $name: String!, $slug: String!, $mainCategoryId: ID){
-              updatePartnerCategory (id: $id, name: $name, slug: $slug, mainCategoryId: $mainCategoryId){
+            mutation updateMainCategory ($id: ID!, $name: String!, $slug: String!){
+              updateMainCategory (id: $id, name: $name, slug: $slug){
                 id
                 name
                 slug              
@@ -145,8 +97,7 @@ class EditCategoryPartners extends Component {
           var queryVars = {
             id: this.state.id,
             name: this.state.name,
-            slug: this.state.slug, 
-            mainCategoryId: this.state.mainCategoryId
+            slug: this.state.slug 
           }
           var opts = {
             // custom fetch options
@@ -167,26 +118,7 @@ class EditCategoryPartners extends Component {
 
   } 
    
-renderKategori(){
 
-  if (this.state.loading) {
-      return (<div><Spinner name="double-bounce" /></div>)
-    }
-
-
-      return(
-      
-        <select id="select" value={this.state.mainCategoryId}  name="mainCategoryId" className="form-control" onChange={(e) => this.setState({mainCategoryId: e.target.value})}>
-                        
-
-            {this.state.datax.map((category) => (
-                        <option key={category.id} value={category.id}>{category.name}</option>
-                       ))}   
-        </select>
-      )
-    
- }
-////////////
  
  
 
@@ -207,7 +139,7 @@ renderKategori(){
           <div className="col-md-12">
             <div className="card">
               <div className="card-header">
-                <strong>Edit </strong>  Category Partners
+                <strong>Edit </strong> Brand Category
               </div>
               <div className="card-block">
                 <form className="form-horizontal">
@@ -221,15 +153,6 @@ renderKategori(){
                       onKeyUp={(e) => this.setState({slug: document.getElementById("slug").value})}
                       />
                      
-                    </div>
-                  </div>
-
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Parent Category</label>
-                    <div className="col-md-9">
-                      
-                         {this.renderKategori()}
-                      
                     </div>
                   </div>
                  
@@ -252,7 +175,7 @@ renderKategori(){
 
                 <button type="submit" className="btn btn-sm btn-primary" onClick={this.onUpdatePress}><i className="fa fa-dot-circle-o"></i> Submit</button>
                 
-                <Link to={'/setting/category-partners/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
+                <Link to={'/setting/category/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
               </div>
             </div>
        
@@ -266,4 +189,4 @@ renderKategori(){
 
 
 }
-export default EditCategoryPartners;
+export default EditCategory;

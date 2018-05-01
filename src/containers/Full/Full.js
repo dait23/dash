@@ -663,6 +663,7 @@ const EditRent = Loadable({
    loading: Loading,
   timeout: 10000, // 10 second
 });
+
 const Inclusion = Loadable({
  loader: () => fakeDelay(500).then(() => import('../../views/Setting/Inclusion/All/')),
    loading: Loading,
@@ -699,6 +700,26 @@ const EditExclusion = Loadable({
    loading: Loading,
   timeout: 10000, // 10 second
 });
+
+///////////////
+
+const MainCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/MainCategory/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewMainCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/MainCategory/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+// const EditMainCategory = Loadable({
+//  loader: () => fakeDelay(500).then(() => import('../../views/Setting/MainCategory/Edit/')),
+//    loading: Loading,
+//   timeout: 10000, // 10 second
+// });
 
 
 class Full extends Component {
@@ -801,13 +822,11 @@ class Full extends Component {
                 <Route path="/member/new" name="New" component={NewMember}/>
                 <Route path="/member/edit/:id" name="Edit" component={EditMember} />
 
-                <Route path="/spaces/all" name="All" component={Spaces}/>
 
-                 <Route path="/setting/rent-type/all" name="Size" component={Rent}/>
+                <Route path="/setting/rent-type/all" name="Size" component={Rent}/>
                 <Route path="/setting/rent-type/new" name="New" component={NewRent}/>
                 <Route path="/setting/rent-type/edit/:id" name="Edit" component={EditRent}/>
 
-                
                 <Route path="/setting/inclusion/all" name="Size" component={Inclusion}/>
                 <Route path="/setting/inclusion/new" name="New" component={NewInclusion}/>
                 <Route path="/setting/inclusion/edit/:id" name="Edit" component={EditInclusion}/>
@@ -815,6 +834,12 @@ class Full extends Component {
                 <Route path="/setting/exclusion/all" name="Size" component={Exclusion}/>
                 <Route path="/setting/exclusion/new" name="New" component={NewExclusion}/>
                 <Route path="/setting/exclusion/edit/:id" name="Edit" component={EditExclusion}/>
+
+
+                 <Route path="/setting/main-category/all" name="MainCategory" component={MainCategory}/>
+                  <Route path="/setting/main-category/new" name="New" component={NewMainCategory}/>
+
+                <Route path="/spaces/all" name="All" component={Spaces}/>
 
                 <Redirect from="/" to="/dashboard"/>
               </Switch>

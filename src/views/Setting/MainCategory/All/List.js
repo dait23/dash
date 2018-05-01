@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 class List extends React.Component {
 
   static propTypes = {
-    brand: PropTypes.object,
-    mutateBrand: PropTypes.func,
+    category: PropTypes.object,
+    mutateCategory: PropTypes.func,
     refresh: PropTypes.func,
   }
 
@@ -26,11 +26,10 @@ class List extends React.Component {
      
                     <tr>
     
-                      <td>{this.props.brand.name}</td>
-                      <td>{this.props.brand.mainCategory.name}</td>
+                      <td>{this.props.category.name}</td>
                      
                       <td width='150'>
-                         <Link to={`/setting/category-partners/edit/${this.props.brand.id}`} className="badge badge-info">Edit</Link>
+                         <Link to={`/setting/category/edit/${this.props.category.id}`} className="badge badge-info">Edit</Link>
                          <span className="badge badge-danger" onClick={this.handleDelete} style={{cursor: 'pointer'}}>Delete</span>
                       </td>
                     </tr>
@@ -38,9 +37,9 @@ class List extends React.Component {
   }
 
   handleDelete = async () => {
-    await this.props.mutateBrand({
+    await this.props.mutateCategory({
       variables: {
-        id: this.props.brand.id
+        id: this.props.category.id
       }
     })
 
@@ -49,15 +48,15 @@ class List extends React.Component {
 }
 
 
-const deleteBrand = gql`
-  mutation deleteBrand($id: ID!) {
-    deletePartnerCategory(id: $id) {
+const deleteCategory = gql`
+  mutation deleteCategory($id: ID!) {
+    deletePartnerMainCategory(id: $id) {
       id
     }
   }
 `
 
-const PageWithMutation = graphql(deleteBrand, {name : 'mutateBrand'})(List)
+const PageWithMutation = graphql(deleteCategory, {name : 'mutateCategory'})(List)
 
 export default PageWithMutation
 

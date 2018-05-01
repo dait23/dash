@@ -3,11 +3,10 @@ import { Link, withRouter} from 'react-router-dom'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types';
-import {MainLink, MainApi} from '../../../../views/Api/';
+import {MainLink} from '../../../../views/Api/';
 
 
-
-class NewCategoryPartners extends Component {
+class NewMainCategory extends Component {
 
   static propTypes = {
     router: PropTypes.object,
@@ -19,20 +18,9 @@ class NewCategoryPartners extends Component {
     this.state = { 
     slug: '',
     name: '',
-    data:[],
-    datax:[],
     }
     this.handleChange = this.handleChange.bind(this)
     this.handlePost = this.handlePost.bind(this)
-  }
-
-
- 
-  componentDidMount() {
-    var that = this;
-    //that.getData();
-    that.getMain();
-      
   }
 
   
@@ -41,69 +29,11 @@ class NewCategoryPartners extends Component {
     this.setState({ description: value })
   }
 
- 
-  getMain(){
-     var that = this;
-     that.setState({
-          loading: true
-      });
-     var fetch = require('graphql-fetch')(MainApi)
 
-          var query = `
-            query Brand {
-              allPartnerMainCategories{
-              id
-              name
-            }
-            }
-          `
-          var queryVars = {
-           // id: this.props.match.params.id
-          }
-          var opts = {
-            // custom fetch options
-          }
-
-
-          fetch(query, queryVars, opts).then(function (results) {
-            if (results.errors) {
-              //...
-              return
-            }
-            //var BlogCategory = results.data.BlogCategory
-
-            that.setState({
-              datax : results.data.allPartnerMainCategories,
-              loading:false
-             });
-            //...
-          })
-
-  }/////////////////
-
-  renderKategori(){
-
-  if (this.state.loading) {
-      return (<div></div>)
-    }
-
-
-      return(
-      
-        <select id="select" value={this.state.mainCategoryId}  name="mainCategoryId" className="form-control" onChange={(e) => this.setState({mainCategoryId: e.target.value})}>
-                         <option>Parent Category</option>
-
-            {this.state.datax.map((category) => (
-                        <option key={category.id} value={category.id}>{category.name}</option>
-                       ))}   
-        </select>
-      )
-    
- }
+  
 
 
   render() {
-
     var slugg = this.state.name;
     var slugx = slugg.replace(/\s+/g,"-");
     var sluger = slugx.toLowerCase();
@@ -128,15 +58,6 @@ class NewCategoryPartners extends Component {
                       />
                     </div>
                   </div>
-
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Parent Category</label>
-                    <div className="col-md-9">
-                      
-                         {this.renderKategori()}
-                      
-                    </div>
-                  </div>
                  
                  
                   <div className="form-group row">
@@ -157,7 +78,7 @@ class NewCategoryPartners extends Component {
 
                 <button type="submit" className="btn btn-sm btn-primary" onClick={this.handlePost}><i className="fa fa-dot-circle-o"></i> Submit</button>
                 
-                <Link to={'/setting/category-partners/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
+                <Link to={'/setting/main-category/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
               </div>
             </div>
        
@@ -170,22 +91,23 @@ class NewCategoryPartners extends Component {
   }
 
   handlePost = async () => {
-    const {name, slug, mainCategoryId} = this.state
-    await this.props.addBrand({variables: {name, slug, mainCategoryId}})
+    const {name, slug} = this.state
+    await this.props.addBrand({variables: {name, slug}})
 
-   window.location= MainLink + "setting/category-partners/all";
+   window.location= MainLink + "setting/main-category/all";
    //window.location.reload(true);
   }
 
 }
 const addMutation = gql`
-  mutation addBrand($name: String!, $slug: String, $mainCategoryId: ID) {
-    createPartnerCategory(name: $name, slug: $slug, mainCategoryId: $mainCategoryId) {
+  mutation addCategory($name: String!, $slug: String) {
+    createPartnerMainCategory(name: $name, slug: $slug) {
       id
-   
+      name
+      slug
     }
   }
 `
 
-const PageWithMutation = graphql(addMutation, { name: 'addBrand' })(NewCategoryPartners)
+const PageWithMutation = graphql(addMutation, { name: 'addBrand' })(NewMainCategory)
 export default withRouter(PageWithMutation)

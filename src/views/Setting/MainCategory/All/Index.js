@@ -6,7 +6,7 @@ import gql from 'graphql-tag'
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 
-class CategoryPartners extends React.Component {
+class MainCategory extends React.Component {
 
   static propTypes = {
     data: PropTypes.object,
@@ -30,23 +30,22 @@ class CategoryPartners extends React.Component {
           <div className="col-lg-12">
             <div className="card">
               <div className="card-header">
-                <i className="fa fa-tag"></i> All Category Partners
-                <Link to={'/setting/category-partners/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
+                <i className="fa fa-tag"></i> All Main Partners Category
+                <Link to={'/setting/main-category/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
               </div>
               <div className="card-block">
                 <table className="table table-bordered table-striped table-sm">
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Parent Category</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-           {this.props.allPostsQuery.allPartnerCategories.map((brand) => (
+           {this.props.allPostsQuery.allPartnerMainCategories.map((category) => (
             <List
-              key={brand.id}
-              brand={brand}
+              key={category.id}
+              category={category}
             />
           ))}
            </tbody>
@@ -66,16 +65,12 @@ class CategoryPartners extends React.Component {
 
 const ALL_QUERY = gql`
   query AllPostsQuery {
-    allPartnerCategories (orderBy: name_DESC) {
+    allPartnerMainCategories(orderBy: name_ASC) {
       id
       slug
       name
-      mainCategory{
-        id
-        name
-      }
     }  
   }
 `
 
-export default graphql(ALL_QUERY, { name: 'allPostsQuery'})(CategoryPartners)
+export default graphql(ALL_QUERY, { name: 'allPostsQuery'})(MainCategory)
