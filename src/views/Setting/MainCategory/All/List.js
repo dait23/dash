@@ -29,7 +29,7 @@ class List extends React.Component {
                       <td>{this.props.category.name}</td>
                      
                       <td width='150'>
-                         <Link to={`/setting/category/edit/${this.props.category.id}`} className="badge badge-info">Edit</Link>
+                         <Link to={`/setting/main-category/edit/${this.props.category.id}`} className="badge badge-info">Edit</Link>
                          <span className="badge badge-danger" onClick={this.handleDelete} style={{cursor: 'pointer'}}>Delete</span>
                       </td>
                     </tr>

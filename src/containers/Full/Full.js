@@ -715,11 +715,11 @@ const NewMainCategory = Loadable({
   timeout: 10000, // 10 second
 });
 
-// const EditMainCategory = Loadable({
-//  loader: () => fakeDelay(500).then(() => import('../../views/Setting/MainCategory/Edit/')),
-//    loading: Loading,
-//   timeout: 10000, // 10 second
-// });
+const EditMainCategory = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/MainCategory/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
 
 
 class Full extends Component {
@@ -838,6 +838,7 @@ class Full extends Component {
 
                  <Route path="/setting/main-category/all" name="MainCategory" component={MainCategory}/>
                   <Route path="/setting/main-category/new" name="New" component={NewMainCategory}/>
+                  <Route path="/setting/main-category/edit/:id" name="Edit" component={EditMainCategory}/>
 
                 <Route path="/spaces/all" name="All" component={Spaces}/>
 

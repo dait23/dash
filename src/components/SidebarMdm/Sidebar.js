@@ -35,6 +35,12 @@ class Sidebar extends Component {
                <li className="nav-item nav-dropdown">
                 <a className="nav-link nav-dropdown-toggle"  onClick={this.handleClick.bind(this)}><i className="fa fa-building-o"></i>Partners</a>
                 <ul className="nav-dropdown-items">
+                         <li className="nav-item">
+                  <NavLink to={'/setting/main-category/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Main Category</NavLink>
+                </li>
+                   <li className="nav-item">
+                    <NavLink to={'/setting/category-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Sub Category</NavLink>
+                  </li>
                  <li className="nav-item">
                     <NavLink to={'/setting/inclusion/all'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i>Inclusions</NavLink>
                   </li>
@@ -53,9 +59,7 @@ class Sidebar extends Component {
                     <li className="nav-item">
                     <NavLink to={'/setting/facility-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Facility Partners</NavLink>
                   </li>
-                 <li className="nav-item">
-                    <NavLink to={'/setting/category-partners/all'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Category Partners</NavLink>
-                  </li>
+        
                 <li className="nav-item">
                   <NavLink to={'/setting/area/all'} className="nav-link" activeClassName="active"><i className="icon-map"></i> Area / Regional</NavLink>
                 </li>

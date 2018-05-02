@@ -9,7 +9,7 @@ import Spinner from 'react-spinkit';
 
 
 
-class EditCategory extends Component {
+class EditMainCategory extends Component {
 
   static propTypes = {
     router: PropTypes.object,
@@ -45,8 +45,8 @@ class EditCategory extends Component {
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            query Brand($id: ID!) {
-              MainCategory(id: $id){
+            query Brandx($id: ID!) {
+              PartnerMainCategory(id: $id){
               id
               name
               slug
@@ -69,10 +69,10 @@ class EditCategory extends Component {
             //var BlogCategory = results.data.BlogCategory
 
             that.setState({
-              data : results.data.MainCategory,
-              id:results.data.MainCategory.id,
-              name:results.data.MainCategory.name,
-              slug:results.data.MainCategory.slug,
+              data : results.data.PartnerMainCategory,
+              id:results.data.PartnerMainCategory.id,
+              name:results.data.PartnerMainCategory.name,
+              slug:results.data.PartnerMainCategory.slug,
               loading:false
              });
             //...
@@ -87,7 +87,7 @@ class EditCategory extends Component {
 
           var query = `
             mutation updateMainCategory ($id: ID!, $name: String!, $slug: String!){
-              updateMainCategory (id: $id, name: $name, slug: $slug){
+              updatePartnerMainCategory (id: $id, name: $name, slug: $slug){
                 id
                 name
                 slug              
@@ -175,7 +175,7 @@ class EditCategory extends Component {
 
                 <button type="submit" className="btn btn-sm btn-primary" onClick={this.onUpdatePress}><i className="fa fa-dot-circle-o"></i> Submit</button>
                 
-                <Link to={'/setting/category/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
+                <Link to={'/setting/main-category/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
               </div>
             </div>
        
@@ -189,4 +189,4 @@ class EditCategory extends Component {
 
 
 }
-export default EditCategory;
+export default EditMainCategory;
