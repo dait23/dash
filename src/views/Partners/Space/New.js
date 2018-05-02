@@ -37,7 +37,9 @@ class AddSpace extends Component {
     partnerId: this.props.match.params.id,
     wideId:'',
     rentId:'',
-    price:'',
+    price1:'',
+    price7:'',
+    price30:'',
     loading: true,
     datax: [],
     uploadedFile: null
@@ -369,8 +371,8 @@ if (this.props.data.loading) {
   }
 
   handlePost = async () => {
-    const {title, slug, price1, price7, price30, description, remarks, imageUrl, imageId,  partnerId, wideId, rentId} = this.state
-    await this.props.addBanner({variables: { title, slug,  description, remarks, imageUrl, imageId,  partnerId, wideId, rentId, price1, price7, price30}})
+    const {title, slug, price1, price7, price30, description, remarks, imageUrl, imageId,  partnerId, wideId} = this.state
+    await this.props.addBanner({variables: { title, slug,  description, remarks, imageUrl, imageId,  partnerId, wideId, price1, price7, price30}})
 
 
    toast('Add Space Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000))
@@ -389,7 +391,6 @@ const addMutation = gql`
   $price30: String,  
   $partnerId: ID,
   $wideId: ID,
-  $rentId: ID,
   $imageUrl: String,
   $imageId: String,
 
@@ -409,7 +410,7 @@ const addMutation = gql`
     imageUrl: $imageUrl
     imageId: $imageId
     wideId: $wideId
-    rentId: $rentId
+
 
 
     ) {
