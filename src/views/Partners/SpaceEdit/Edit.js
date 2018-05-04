@@ -224,7 +224,7 @@ class AddEditSpace extends Component {
               remarks:results.data.Space.remarks,
               partnerId:results.data.Space.partner.id,
               wideId:results.data.Space.wide.id,
-              rentId:results.data.Space.rent.id,
+              // rentId:results.data.Space.rent.id,
               loading:false
              });
             //...
@@ -239,8 +239,8 @@ class AddEditSpace extends Component {
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price1: String, $price7: String, $price30: String, $imageId: String, $imageUrl: String, $description: String, $remarks: String,  $partnerId: ID, $rentId: ID){
-              updateSpace (id: $id, title: $title, slug: $slug, price1: $price1, price7: $price7, price30: $price30, imageId: $imageId, imageUrl: $imageUrl, description: $description, remarks: $remarks, partnerId: $partnerId, rentId: $rentId){
+            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price1: String, $price7: String, $price30: String, $imageId: String, $imageUrl: String, $description: String, $remarks: String,  $partnerId: ID){
+              updateSpace (id: $id, title: $title, slug: $slug, price1: $price1, price7: $price7, price30: $price30, imageId: $imageId, imageUrl: $imageUrl, description: $description, remarks: $remarks, partnerId: $partnerId){
                 id           
               }
             }
@@ -253,7 +253,6 @@ class AddEditSpace extends Component {
             price7: this.state.price7,
             price30: this.state.price30,
             partnerId: this.state.partnerId,
-            rentId: this.state.rentId,
             imageUrl: this.state.imageUrl,
             imageId: this.state.imageId,
             description: this.state.description,
@@ -392,12 +391,6 @@ renderRent(){
                   </div>
 
 
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Waktu Sewa</label>
-                    <div className="col-md-9">
-                       {this.renderRent()}
-                    </div>
-                  </div>
 
                   
                   <div className="form-group row">
