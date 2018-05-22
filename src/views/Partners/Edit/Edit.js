@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import {
+
+  Input,
+
+} from "reactstrap";
 import {withRouter, Link } from 'react-router-dom'
-import {MainApi, Cloudinary_Code, Cloudinary_Link} from '../../../views/Api/';
 import request from 'superagent';
 import slugify from 'slugify';
 import ReactQuill from "react-quill";
@@ -14,7 +18,15 @@ import { Multiselect } from 'react-widgets'
 import 'react-widgets/dist/css/react-widgets.css';
 import 'react-select-plus/dist/react-select-plus.css';
 
+import {Cloudinary_Code, Cloudinary_Link, Cloudinary_Name, MainApi} from '../../../views/Api/';
+import Dropzone from 'react-dropzone'
+
+
 import { ToastContainer, toast} from 'react-toastify';
+
+const CLOUDINARY_UPLOAD_PRESET = Cloudinary_Code;
+const CLOUDINARY_UPLOAD_URL = Cloudinary_Link;
+
 
 const renderSuggestion = ({ formattedSuggestion }) => (
   <div className="Demo__suggestion-item">
@@ -77,6 +89,7 @@ class EditPartners extends Component {
         userId: localStorage.getItem('uid'),
         areaId: '',
         visitors:[],
+        status:'',
         nearby: '',
         workingHour:'',
         facebook: '',
@@ -100,6 +113,7 @@ class EditPartners extends Component {
         //this.handleChangeRe = this.handleChangeRe.bind(this)
          this.handleChangeInc = this.handleChangeInc.bind(this)
         this.handleChangeExc = this.handleChangeExc.bind(this)
+         this.handleChangeSec = this.handleChangeSec.bind(this)
 
         this.handleSelect = this.handleSelect.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -107,6 +121,34 @@ class EditPartners extends Component {
       }
  ////////////////////////////
 
+  onImageDrop(files) {
+    this.setState({
+      uploadedFile: files[0]
+    });
+
+    this.handleImageUpload(files[0]);
+  }
+
+  handleImageUpload(file) {
+    let upload = request.post(CLOUDINARY_UPLOAD_URL)
+                     .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                     .field('file', file);
+
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+
+      if (response.body.secure_url !== '') {
+        console.log(response.body);
+        this.setState({
+           imageUrl: response.body.secure_url,
+           imageId: response.body.public_id
+        });
+      }
+    });
+  }
+  //////////////////
   handleSelectChangeDay (value) {
 
     const map1 = value.map(x => x.id);
@@ -180,6 +222,9 @@ class EditPartners extends Component {
               avgSpending
               nearby
               peakHour
+              imageId
+              imageUrl
+              status
               picName
               picPhone
               ownerName
@@ -229,6 +274,10 @@ class EditPartners extends Component {
               id
               name
             }
+            segments{
+              id
+              name
+            }
               
               }
             }
@@ -257,10 +306,13 @@ class EditPartners extends Component {
               address:results.data.Partner.address,
               lat:results.data.Partner.lat,
               lng:results.data.Partner.lng,
+              status:results.data.Partner.status,
               avgVisitor:results.data.Partner.avgVisitor,
               avgSpending:results.data.Partner.avgSpending,
               nearby:results.data.Partner.nearby,
               peakHour:results.data.Partner.peakHour,
+              imageUrl:results.data.Partner.imageUrl,
+              imageId:results.data.Partner.imageId,
               picName:results.data.Partner.picName,
               picPhone:results.data.Partner.picPhone,
               ownerName:results.data.Partner.ownerName,
@@ -279,6 +331,7 @@ class EditPartners extends Component {
               visitors:results.data.Partner.visitors,
               facilitiesIds:results.data.Partner.facilities.id,
               facilities:results.data.Partner.facilities,
+              segments:results.data.Partner.segments,
               categoryId:results.data.Partner.category.id,
               typesIds:results.data.Partner.types.id,
               types:results.data.Partner.types,
@@ -302,6 +355,16 @@ handleChangeInc (value) {
 
 
        console.log('Inclusions:', map1);
+    }
+
+    handleChangeSec (value) {
+
+      const map1 = value.map(x => x.id);
+
+      this.setState({ segmentsIds: map1 });
+
+
+       console.log('Segment:', map1);
     }
 
     /////////////////
@@ -528,6 +591,42 @@ renderArea(){
                        defaultValue={exList.map((exclusionx) => (
                            
                            {id: exclusionx.id, name: exclusionx.name}
+
+                         
+                          ))}
+                      />
+
+
+      )
+
+  }
+
+  renderSegment(){
+
+      const secList = this.state.segments || []
+
+     if (this.props.SecQuery.loading) {
+      return (<div></div>)
+
+       }
+      
+      return(
+
+
+       <Multiselect
+                       onChange={this.handleChangeSec}
+                        data={this.props.SecQuery.allSegments.map((segmentx) => (
+                           
+                           {id: segmentx.id, name: segmentx.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Segment Market"
+                       defaultValue={secList.map((segment) => (
+                           
+                           {id: segment.id, name: segment.name}
 
                          
                           ))}
@@ -852,22 +951,14 @@ renderArea(){
                   </div>
 
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Average Spending</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Segment Market</label>
                     <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.avgSpending} name="avgSpending" className="form-control" placeholder="average spendding"
-                      onChange={(e) => this.setState({avgSpending: e.target.value})}
-                      />
+                       {this.renderSegment()}
+                      
                     </div>
                   </div>
 
-                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Peak Hours</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.peakHour} name="peakHour" className="form-control" placeholder="peak hours"
-                      onChange={(e) => this.setState({peakHour: e.target.value})}
-                      />
-                    </div>
-                  </div>
+                   
                   
                     <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">NearBy</label>
@@ -894,6 +985,23 @@ renderArea(){
                     <div className="col-md-9">
                       {this.renderEx()}
                      
+                    </div>
+                  </div>
+                    <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="file-input">Image Thumb</label>
+                    <div className="col-md-9">
+                      
+                    <Dropzone
+                        onDrop={this.onImageDrop.bind(this)}
+                        multiple={false}
+                        accept="image/*">
+                        <div>Drop an image or click to select a file to upload.</div>
+                      </Dropzone>
+                       {this.state.imageUrl === '' ? null :
+                      
+                        <img src={this.state.imageUrl}  alt="avatar" width="200"/>
+                      }
+          
                     </div>
                   </div>
               
@@ -1036,13 +1144,27 @@ renderArea(){
                     
                     </div>
                   </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="select">Status</label>
+                    <div className="col-md-9">
+                      <Input type="select" name="status"  value={this.state.status} size="sm"  onChange={(e) => this.setState({status: e.target.value})}>
+                        <option >Please select</option>
+                        <option value="0">Draft</option>
+                        <option value="1">Publish</option>
+                        <option value="2">Pending</option>
+                        <option value="3">Expired</option>
+                      </Input>
+                       
+                    </div>
+                  </div>
                  
                   
 
                    </div>
                 </div>
                  
-                 
+              
       
                   
                 </form>
@@ -1080,11 +1202,14 @@ renderArea(){
         toast('only logged in users can create new posts', { type: toast.TYPE.ERROR, autoClose: 2000 })
         return
       }
+
+
        
       const userId = localStorage.getItem('uid');
-      const { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId } = this.state
+      const { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram,  avgVisitor, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl, status } = this.state
     
-      await this.props.updatePartnersMutation({variables: { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId }})
+      await this.props.updatePartnersMutation({variables: { 
+        id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl,  status: parseInt(this.state.status, 10) }})
        toast('Update Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';", 2000))
   }
 
@@ -1092,6 +1217,13 @@ renderArea(){
 
 
 }
+
+const SecQuery = gql`query allSegments {
+  allSegments(orderBy:name_ASC) {
+    id
+    name
+  }
+}`
 
 
 const ExQuery = gql`query allExclusions {
@@ -1172,9 +1304,7 @@ const UPDATE_PARTNERS_MUTATION = gql`
       $address: String,
       $picName: String,
       $picPhone: String,
-      $avgSpending: String,
       $avgVisitor: String,
-      $peakHour: String,
       $nearby: String,
       $website: String,
       $facebook: String,
@@ -1194,7 +1324,11 @@ const UPDATE_PARTNERS_MUTATION = gql`
       $ownerName: String,
       $ownerPhone: String,
       $remarks: String,
-       $daysIds: [ID!],
+      $daysIds: [ID!],
+      $segmentsIds:[ID!],
+      $imageUrl: String,
+      $imageId: String,
+      $status: Int
   ) {
     updatePartner(
         id: $id,
@@ -1206,9 +1340,7 @@ const UPDATE_PARTNERS_MUTATION = gql`
         address:$address,
         picName: $picName,
         picPhone: $picPhone,
-        avgSpending: $avgSpending,
         avgVisitor: $avgVisitor,
-        peakHour: $peakHour,
         nearby: $nearby,
         website: $website,
         facebook: $facebook,
@@ -1226,7 +1358,11 @@ const UPDATE_PARTNERS_MUTATION = gql`
         ownerName: $ownerName,
         ownerPhone: $ownerPhone,
         remarks: $remarks,
-        daysIds: $daysIds
+        daysIds: $daysIds,
+        segmentsIds: $segmentsIds,
+         imageUrl: $imageUrl,
+        imageId: $imageId,
+        status: $status
 
     ) {
       id
@@ -1240,6 +1376,7 @@ const UPDATE_PARTNERS_MUTATION = gql`
 
 export default compose(
   graphql(ExQuery, { name: 'ExQuery' }),
+   graphql(SecQuery, { name: 'SecQuery' }),
   graphql(IncQuery, { name: 'IncQuery' }),
   graphql(CatQuery, { name: 'CatQuery' }),
   graphql(AreaQuery, { name: 'AreaQuery' }),

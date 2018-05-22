@@ -1,3 +1,5 @@
+import Dropzone from 'react-dropzone'
+import request from 'superagent';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { ToastContainer} from 'react-toastify';
 import partnerStore from '../Store/Store';
@@ -11,8 +13,11 @@ import 'react-widgets/dist/css/react-widgets.css';
 import 'react-select-plus/dist/react-select-plus.css';
 import { Link} from 'react-router-dom'
 
+import {Cloudinary_Code, Cloudinary_Link} from '../../../views/Api/';
 
 
+const CLOUDINARY_UPLOAD_PRESET = Cloudinary_Code;
+const CLOUDINARY_UPLOAD_URL = Cloudinary_Link;
 
 
 const renderSuggestion = ({ formattedSuggestion }) => (
@@ -61,7 +66,7 @@ const Partner = inject('partnerStore')(
         geocodeResults: null,
         loading: false,
         name: '',
-        uid:'',
+        uId:'',
         slug:'',
         picName: '',
         picPhone: '',
@@ -84,6 +89,7 @@ const Partner = inject('partnerStore')(
         collabsIds:[],
         inclusionsIds:[],
         exclusionsIds:[],
+        segmentsIds:[],
         daysIds:[],
         nearby: '',
         workingHour:'',
@@ -105,6 +111,7 @@ const Partner = inject('partnerStore')(
          // this.handleChangeDay = this.handleChangeDay.bind(this)
         this.handleChangeVit = this.handleChangeVit.bind(this)
         this.handleChangeInc = this.handleChangeInc.bind(this)
+         this.handleChangeSec = this.handleChangeSec.bind(this)
         this.handleChangeExc = this.handleChangeExc.bind(this)
         //this.handleChangeRe = this.handleChangeRe.bind(this)
 
@@ -113,6 +120,34 @@ const Partner = inject('partnerStore')(
         
       }
    ////
+
+    onImageDrop(files) {
+    this.setState({
+      uploadedFile: files[0]
+    });
+
+    this.handleImageUpload(files[0]);
+  }
+
+  handleImageUpload(file) {
+    let upload = request.post(CLOUDINARY_UPLOAD_URL)
+                     .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                     .field('file', file);
+
+    upload.end((err, response) => {
+      if (err) {
+        console.error(err);
+      }
+
+      if (response.body.secure_url !== '') {
+        console.log(response.body);
+        this.setState({
+           imageUrl: response.body.secure_url,
+           imageId: response.body.public_id
+        });
+      }
+    });
+  }
 
  handleSelect(address) {
     this.setState({
@@ -156,13 +191,12 @@ const Partner = inject('partnerStore')(
     this.state.categoryId, 
     this.state.address, 
     this.state.picName, 
-    this.state.picPhone, 
+    this.state.picPhone,
     this.state.nearby, 
     this.state.website, 
     this.state.facebook, 
     this.state.facilities, 
     this.state.instagram, 
-    this.state.avgSpending, 
     this.state.avgVisitor, 
     this.state.userId, 
     this.state.visitorsIds, 
@@ -178,10 +212,22 @@ const Partner = inject('partnerStore')(
     this.state.ownerPhone,
     this.state.remarks,
     this.state.daysIds,
-    this.state.uId,  
+    this.state.uId, 
+    this.state.segmentsIds,
+    this.state.imageUrl,
+    this.state.imageId  
 
     );
+  
+   handleChangeSec (value) {
 
+      const map1 = value.map(x => x.id);
+
+      this.setState({ segmentsIds: map1 });
+
+
+       console.log('Segment:', map1);
+    }
 
     handleChangeInc (value) {
 
@@ -333,7 +379,7 @@ renderGeocodeFailure(err) {
       id: 'my-input-id',
     }
 
-        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions, days } = this.props.partnerStore;
+        const { error, loading, count, areas, categories, visitors, facilities, events, collabs, inclusions, exclusions, days, segments } = this.props.partnerStore;
         console.log(count);
 
         if (error) console.error(error);
@@ -363,6 +409,8 @@ renderGeocodeFailure(err) {
                     <label className="col-md-3 form-control-label" htmlFor="text-input"></label>
                     <div className="col-md-9">
                       <input type="hidden" id="slug" value={sluger} name="slug" className="form-control" placeholder="Slug"
+                       onChange={(e) => this.setState({slug: e.target.value})}
+
                       />
                      
                     </div>
@@ -429,10 +477,20 @@ renderGeocodeFailure(err) {
                   </div>
 
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Average Spending</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Segment Market</label>
                     <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.avgSpending} name="avgSpending" className="form-control" placeholder="average spendding"
-                      onChange={(e) => this.setState({avgSpending: e.target.value})}
+                      <Multiselect
+                       onChange={this.handleChangeSec}
+                        data={segments.map((segment) => (
+                           
+                           {id: segment.id, name: segment.name}
+
+                         
+                          ))}
+                        valueField='id'
+                        textField='name'
+                        placeholder="Select Segment Market"
+                        defaultValue={[]}
                       />
                     </div>
                   </div>
@@ -487,6 +545,25 @@ renderGeocodeFailure(err) {
                         placeholder="Select Exclusion Partner"
                         defaultValue={[]}
                       />
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="file-input">Image Thumb</label>
+                    <div className="col-md-9">
+                      
+                    <Dropzone
+                        onDrop={this.onImageDrop.bind(this)}
+                        multiple={false}
+                        accept="image/*">
+                        <div>Drop an image or click to select a file to upload.</div>
+                      </Dropzone>
+                       {this.state.imageUrl === '' ? null :
+                      
+                        <img src={this.state.imageUrl}  alt="avatar"/>
+                      }
+          
                     </div>
                   </div>
               

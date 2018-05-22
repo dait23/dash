@@ -3,6 +3,8 @@ import { Link} from 'react-router-dom';
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types';
+import {Cloudinary_Name, No_Avatar, No_Image} from '../../../views/Api/';
+import {Image} from 'cloudinary-react';
 import ListSpace from './ListSpace';
 
 class List extends React.Component {
@@ -25,14 +27,91 @@ renderGallery(){
 }
 
 
+////////// render image
+
+  renderThumb(){
+
+    if (this.props.partner.imageId === ""){
+
+        return(
+
+              <img src={No_Image} alt="thumb"/>
+          )
+                        
+      }
+      else{
+
+        return(
+
+             <Image cloudName={Cloudinary_Name} publicId={this.props.partner.imageId} width="100" crop="scale" />
+
+          )
+      }      
+
+  }
+
+
+
+renderSpace(){
+
+  if(this.props.partner.spaces === []){
+
+    return(
+           
+           <p>Empty Spaces</p>
+
+      )
+
+  }else{
+
+     return(
+
+
+     <ul>
+                            {this.props.partner.spaces.map((space) => (
+                            <ListSpace
+                              key={space.id}
+                              space={space}
+                            />
+                          ))}
+                          </ul>
+
+
+
+     )
+
+    
+
+  }
+
+}
+
   
  renderStatus(){
 
-     if(this.props.partner.status === '0' ){
+     if(this.props.partner.status == '0' ){
 
       return(
 
-        <div><Link to={`/partners/edit/${this.props.partner.id}`} className="badge badge-warning">Not Complete</Link></div>
+       <span className="badge badge-warning">Draft</span>
+
+      )
+
+      }
+       if(this.props.partner.status == '2' ){
+
+      return(
+
+       <span className="badge badge-info">Pending</span>
+
+      )
+
+      }
+       if(this.props.partner.status == '3' ){
+
+      return(
+
+       <span className="badge badge-danger">Expired</span>
 
       )
 
@@ -41,7 +120,7 @@ renderGallery(){
 
        return(
 
-        <div><span className="badge badge-success" >Complete</span></div>
+        <span className="badge badge-success">Publish</span>
 
       )
 
@@ -55,20 +134,15 @@ renderGallery(){
     return (
      
                     <tr>
+                     <td width="80">{this.renderThumb()}</td>
                       <td>{this.props.partner.name}</td>
                       <td>{this.props.partner.category.name}</td>
                       <td>{this.props.partner.area.name}</td>
+                       <td align="center">{this.renderStatus()}</td>
                       <td>
 
-
-                           <ul>
-                            {this.props.partner.spaces.map((space) => (
-                            <ListSpace
-                              key={space.id}
-                              space={space}
-                            />
-                          ))}
-                          </ul>
+                         {this.renderSpace()}
+                           
 
                       </td>
       
@@ -79,6 +153,7 @@ renderGallery(){
                          <Link to={`/partners/space/${this.props.partner.id}`} className="badge badge-success">Add Space</Link>
                         
                       </td>
+                         
                     </tr>
     )
   }

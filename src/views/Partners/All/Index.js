@@ -44,9 +44,11 @@ const Partner = inject('partnerStore')(
                 <table className="table table-bordered table-striped table-sm">
                   <thead>
                     <tr>
+                    <th width='80'>Thumb</th>
                       <th width='200'>Name Partner</th>
                       <th width='100'>Category</th>
                       <th width='100'>Area</th>
+                      <th align="center" width='50'>Status</th>
                       <th>Spaces</th>
                       <th>Action</th>
                     </tr>

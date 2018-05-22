@@ -13,7 +13,7 @@ export const Cloudinary_Name = 'spazeeid';
 export const Cloudinary_Code = 'spazeeid';
 export const Cloudinary_Link = 'https://api.cloudinary.com/v1_1/spazeeid/image/upload';
 
-export const No_Image = 'https://res.cloudinary.com/ringoid/image/upload/c_thumb,h_50,w_50/v1504372500/noavatar_o558wb.png';
+export const No_Image = 'https://res.cloudinary.com/ringoid/image/upload/c_thumb,h_80,w_80/v1504372500/noavatar_o558wb.png';
 export const No_Avatar = 'https://res.cloudinary.com/spazeeid/image/upload/c_thumb,q_auto:best,w_80/v1516781262/no-avatar_iy4zru.png';
 
 
