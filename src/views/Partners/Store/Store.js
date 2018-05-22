@@ -21,6 +21,8 @@ const allTeamQuery = gql`
     avgVisitor
     avgSpending
     nearby
+    imageId
+    imageUrl
     peakHour
     picName
     picPhone
@@ -85,6 +87,17 @@ const allCategoryQuery = gql`
      }
   }
 `;
+
+const allSegmentQuery = gql`
+  {
+    allSegments {
+      id
+      name
+      
+     }
+  }
+`;
+
 
 const allFacilityQuery = gql`
   {
@@ -163,7 +176,6 @@ const createPartnerMutation = gql`
       $address: String,
       $picName: String,
       $picPhone: String,
-      $avgSpending: String,
       $avgVisitor: String,
       $peakHour: String,
       $nearby: String,
@@ -187,6 +199,9 @@ const createPartnerMutation = gql`
       $remarks: String,
       $daysIds: [ID!],
       $uId: String,
+      $segmentsIds:[ID!],
+      $imageUrl: String,
+      $imageId: String
     
     
       ) {
@@ -198,7 +213,6 @@ const createPartnerMutation = gql`
         address:$address,
         picName: $picName,
         picPhone: $picPhone,
-        avgSpending: $avgSpending,
         avgVisitor: $avgVisitor,
         peakHour: $peakHour,
         nearby: $nearby,
@@ -219,7 +233,10 @@ const createPartnerMutation = gql`
         ownerPhone: $ownerPhone,
         remarks: $remarks,
         daysIds: $daysIds,
-        uId: $uId
+        uId: $uId,
+        segmentsIds: $segmentsIds,
+        imageUrl: $imageUrl,
+        imageId: $imageId
         ) {
       id
     }
@@ -234,7 +251,6 @@ const updatePartnerMutation = gql`
       $address: String,
       $picName: String,
       $picPhone: String,
-      $avgSpending: String,
       $avgVisitor: String,
       $peakHour: String,
       $nearby: String,
@@ -256,7 +272,8 @@ const updatePartnerMutation = gql`
       $ownerName: String,
       $ownerPhone: String,
       $remarks: String,
-       $daysIds: [ID!],
+      $daysIds: [ID!],
+      $segmentsIds:[ID!]
     
     
       ) {
@@ -269,7 +286,6 @@ const updatePartnerMutation = gql`
         address:$address,
         picName: $picName,
         picPhone: $picPhone,
-        avgSpending: $avgSpending,
         avgVisitor: $avgVisitor,
         peakHour: $peakHour,
         nearby: $nearby,
@@ -289,7 +305,9 @@ const updatePartnerMutation = gql`
         ownerName: $ownerName,
         ownerPhone: $ownerPhone,
         remarks: $remarks,
-        daysIds: $daysIds
+        daysIds: $daysIds,
+        segmentsIds: $segmentsIds
+
       
         ) {
       id
@@ -319,6 +337,9 @@ const partnerStore = new class {
       },
        get allQueryCategory() {
         return graphql({ client, query: allCategoryQuery });
+      },
+       get allQuerySegment() {
+        return graphql({ client, query: allSegmentQuery });
       },
       get allQueryVisitor() {
         return graphql({ client, query: allVisitorQuery });
@@ -356,6 +377,9 @@ const partnerStore = new class {
       get categories() {
          return (this.allQueryCategory.data.allPartnerCategories && toJS(this.allQueryCategory.data.allPartnerCategories)) || [];
        },
+      get segments() {
+         return (this.allQuerySegment.data.allSegments && toJS(this.allQuerySegment.data.allSegments)) || [];
+       },
       get visitors() {
          return (this.allQueryVisitor.data.allVisitorTypes && toJS(this.allQueryVisitor.data.allVisitorTypes)) || [];
        },
@@ -383,11 +407,11 @@ const partnerStore = new class {
 
   }
 
-  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby,  website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId) =>
+  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageUrl, imageId) =>
     client
       .mutate({
         mutation: createPartnerMutation,
-        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby,  website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId},
+        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby,  website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageUrl, imageId},
         refetchQueries: [{ query: allTeamQuery }]
       })
       .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))
@@ -395,11 +419,11 @@ const partnerStore = new class {
 
 /////////////updated
 
-updatePartner = (id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram,  avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds) =>
+updatePartner = (id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds) =>
     client
       .mutate({
         mutation: updatePartnerMutation,
-        variables: { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgSpending, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds,  ownerName, ownerPhone, remarks, daysIds},
+        variables: { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, peakHour, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds,  ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds},
         refetchQueries: [{ query: allTeamQuery }]
       })
       .then(() => console.log('Update partners ..'), toast('Update Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))
