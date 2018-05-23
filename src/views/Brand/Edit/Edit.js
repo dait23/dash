@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import {
+
+  Input,
+
+} from "reactstrap";
 import { Link} from 'react-router-dom'
 import {MainApi, Cloudinary_Code, Cloudinary_Link} from '../../../views/Api/';
 import request from 'superagent';
 import ReactQuill from "react-quill";
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
+import { Multiselect } from 'react-widgets'
+import 'react-widgets/dist/css/react-widgets.css';
 import Select from 'react-select-plus';
 import 'react-select-plus/dist/react-select-plus.css';
 
@@ -30,6 +37,7 @@ class EditBrand extends Component {
     this.state = { 
     id: '',
     address: '',
+    uId:'',
     name: '',
     company:'',
     phone: '',
@@ -37,6 +45,8 @@ class EditBrand extends Component {
     follower: '',
     picName:'',
     picPhone:'',
+    ownerName:'',
+    ownerPhone:'',
     email: '',
     categoryId: '',
     categoryName: '',
@@ -47,6 +57,7 @@ class EditBrand extends Component {
     facebook: '',
     instagram: '',
     twitter: '',
+    status:'',
     website: '',
     imageUrl:'',
     imageId:'',
@@ -220,10 +231,14 @@ class EditBrand extends Component {
               company
               picName
               picPhone
+              ownerPhone
+              ownerName
+              uId
               follower
               phone
               address
               email
+              status
               source
               facebook
               instagram
@@ -262,6 +277,7 @@ class EditBrand extends Component {
             that.setState({
               data : results.data.Brand,
               id:results.data.Brand.id,
+              uId:results.data.Brand.uId,
               name:results.data.Brand.name,
               company:results.data.Brand.company,
               email:results.data.Brand.email,
@@ -269,10 +285,13 @@ class EditBrand extends Component {
               follower:results.data.Brand.follower,
               picName:results.data.Brand.picName,
               picPhone:results.data.Brand.picPhone,
+              ownerName:results.data.Brand.ownerName,
+              ownerPhone:results.data.Brand.ownerPhone,
               phone:results.data.Brand.phone,
               address:results.data.Brand.address,
               remarks:results.data.Brand.remarks,
               website:results.data.Brand.website,
+              status:results.data.Brand.status,
               facebook:results.data.Brand.facebook,
               instagram:results.data.Brand.instagram,
               twitter:results.data.Brand.twitter,
@@ -315,7 +334,10 @@ class EditBrand extends Component {
               $remarks: String, 
               $source: String, 
               $userId: ID,
-              $status: Int
+              $status: Int,
+               $ownerName: String,
+               $ownerPhone: String,
+               $uId: String,
             ){
               updateBrand (
               id: $id,
@@ -336,7 +358,11 @@ class EditBrand extends Component {
               twitter: $twitter,
               website: $website,
               remarks: $remarks,
-              status: $status
+              status: $status,
+                ownerName: $ownerName,
+                ownerPhone: $ownerPhone,
+                uId: $uId
+
               ){
                 id           
               }
@@ -361,7 +387,12 @@ class EditBrand extends Component {
             twitter: this.state.twitter,
             website: this.state.website, 
             userId: this.state.userId, 
-            status: parseInt('1', 10) 
+            picName: this.state.picName, 
+           picPhone: this.state.picPhone, 
+           ownerName: this.state.ownerName, 
+           ownerPhone:this.state.ownerPhone, 
+           uId:this.state.uId,
+            status: parseInt(this.state.status, 10) 
           }
           var opts = {
             // custom fetch options
@@ -472,6 +503,49 @@ renderTipe(){
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.name} name="name" className="form-control" placeholder="Name"
                       onChange={(e) => this.setState({name: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Brand ID</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.uId} name="uId" className="form-control" placeholder="brand Id"
+                      onChange={(e) => this.setState({uId: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Pic Name</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.picName} name="picName" className="form-control" placeholder="Pic Name"
+                      onChange={(e) => this.setState({picName: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Pic Phone</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.picPhone} name="picPhone" className="form-control" placeholder="Pic Phone"
+                      onChange={(e) => this.setState({picPhone: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Name</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.ownerName} name="ownerName" className="form-control" placeholder="Owner Name"
+                      onChange={(e) => this.setState({ownerName: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Phone</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.ownerPhone} name="ownerName" className="form-control" placeholder="Owner Phone"
+                      onChange={(e) => this.setState({ownerPhone: e.target.value})}
                       />
                     </div>
                   </div>
@@ -635,6 +709,19 @@ renderTipe(){
                       <input type="text" id="text-input" value={this.state.source} name="source" className="form-control" placeholder="Source scraping"
                       onChange={(e) => this.setState({source: e.target.value})}
                       />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="select">Status</label>
+                    <div className="col-md-9">
+                      <Input type="select" name="status"  value={this.state.status} size="sm"  onChange={(e) => this.setState({status: e.target.value})}>
+                        <option >Please select</option>
+                        <option value="1">FU1</option>
+                        <option value="2">FU2</option>
+                        <option value="3">FU3</option>
+                      </Input>
+                       
                     </div>
                   </div>
                   

@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import { Link} from 'react-router-dom'
-import {
-
-  Input,
-
-} from "reactstrap";
 import ReactQuill from "react-quill";
 import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -12,8 +7,6 @@ import request from 'superagent';
 
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
-import { Multiselect } from 'react-widgets'
-import 'react-widgets/dist/css/react-widgets.css';
 import Select from 'react-select-plus';
 import 'react-select-plus/dist/react-select-plus.css';
 import {MainApi, MainLink, Cloudinary_Code, Cloudinary_Link} from '../../../views/Api/';
@@ -37,12 +30,6 @@ class NewBrand extends Component {
     address: '',
     name: '',
     phone: '',
-    uId:'',
-    picName:'',
-    picPhone:'',
-    ownerName:'',
-    ownerPhone:'',
-    status:'',
     company:'',
     source: '',
     email: '',
@@ -56,7 +43,6 @@ class NewBrand extends Component {
     twitter: '',
     website: '',
     imageUrl:'',
-    status:'',
     imageId:'',
     link:'',
     selectedOption: '',
@@ -235,53 +221,6 @@ renderTipe(){
                     </div>
                   </div>
 
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Brand ID</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.uId} name="uId" className="form-control" placeholder="brand Id"
-                      onChange={(e) => this.setState({uId: e.target.value})}
-                      />
-                    </div>
-                  </div>
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Pic Name</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.picName} name="picName" className="form-control" placeholder="Pic Name"
-                      onChange={(e) => this.setState({picName: e.target.value})}
-                      />
-                    </div>
-                  </div>
-
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Pic Phone</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.picPhone} name="picPhone" className="form-control" placeholder="Pic Phone"
-                      onChange={(e) => this.setState({picPhone: e.target.value})}
-                      />
-                    </div>
-                  </div>
-
-                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Name</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.ownerName} name="ownerName" className="form-control" placeholder="Owner Name"
-                      onChange={(e) => this.setState({ownerName: e.target.value})}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Owner Phone</label>
-                    <div className="col-md-9">
-                      <input type="text" id="text-input" value={this.state.ownerPhone} name="ownerName" className="form-control" placeholder="Owner Phone"
-                      onChange={(e) => this.setState({ownerPhone: e.target.value})}
-                      />
-                    </div>
-                  </div>
-                 
-
-
-
                   <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Company Name</label>
                     <div className="col-md-9">
@@ -434,23 +373,11 @@ renderTipe(){
                     </div>
                   </div>
 
-                  <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Status</label>
-                    <div className="col-md-9">
-                      <Input type="select" name="status"  value={this.state.status} size="sm"  onChange={(e) => this.setState({status: e.target.value})}>
-                        <option >Please select</option>
-                        <option value="1">FU1</option>
-                        <option value="2">FU2</option>
-                        <option value="3">FU3</option>
-                      </Input>
-                       
-                    </div>
-                  </div>
-      
-
                    </div>
                 </div>
                 
+                 
+      
                   
                 </form>
               </div>
@@ -471,10 +398,9 @@ renderTipe(){
   }
 
   handlePost = async () => {
-   // const {name, email, phone, address, website, categoryId, typeId, facebook, instagram, twitter, remarks, userId, source, follower, company, picName, picPhone, ownerName, ownerPhone, uId} = this.state
+   // const {name, email, phone, address, website, categoryId, typeId, facebook, instagram, twitter, remarks, userId, source, follower} = this.state
     await this.props.addBanner({variables: { 
        name : this.state.name,
-       company : this.state.company,
        email: this.state.email,
        follower: this.state.follower,
        source: this.state.source, 
@@ -488,16 +414,9 @@ renderTipe(){
        twitter: this.state.twitter, 
        remarks: this.state.remarks, 
        userId: this.state.userId,
-       picName: this.state.picName, 
-       picPhone: this.state.picPhone, 
-       ownerName: this.state.ownerName, 
-       ownerPhone:this.state.ownerPhone, 
-       uId:this.state.uId,
-       status: parseInt(this.state.status, 10) 
-
-      // to: this.state.email,
-      // text: "Hai",
-      // html: "<html> Hai, Apakah Kamu Brand / Merchant Owner dari <strong>"  + this.state.name+ "</strong> <br /> Apakah bisa minta kontaknya! Thanks </html>"
+      to: this.state.email,
+      text: "Hai",
+      html: "<html> Hai, Apakah Kamu Brand / Merchant Owner dari <strong>"  + this.state.name+ "</strong> <br /> Apakah bisa minta kontaknya! Thanks </html>"
 
 }})
 
@@ -507,33 +426,9 @@ renderTipe(){
 
 }
 const addMutation = gql`
-  mutation addBanner(
-     $name: String!, 
-     $email: String, 
-     $address: String, 
-     $phone: String, 
-     $categoryId: ID,
-     $typeId: ID, 
-     $facebook: String, 
-     $instagram: String, 
-     $website: String, 
-     $twitter: String, 
-     $remarks: String, 
-     $userId: ID,  
-     $source: String, 
-     $follower: String, 
-     $company: String,
-     $picName: String,
-     $picPhone: String,
-     $ownerName: String,
-     $ownerPhone: String,
-     $uId: String,
-     $status: Int,
-
-     ) {
+  mutation addBanner($name: String!, $email: String, $address: String, $phone: String, $categoryId: ID, $typeId: ID, $facebook: String, $instagram: String, $website: String, $twitter: String, $remarks: String, $userId: ID, $to: [String!]!,  $html: String, $source: String, $follower: String) {
     createBrand(
     name: $name, 
-    company: $company,
     email:$email,
     follower:$follower,
     phone: $phone, 
@@ -547,19 +442,21 @@ const addMutation = gql`
     twitter: $twitter,
     website: $website
     remarks: $remarks
-    picPhone: $picPhone,
-    picName: $picName,
-    ownerName: $ownerName,
-    ownerPhone: $ownerPhone,
-    uId: $uId,
-    status:$status
-
     
     ) {
       id
       name
     }
-  
+    sendMailgunEmail(
+      tag: "brand",
+      from: "info@spazee.id",
+      to: $to,
+      subject: "Are U Brand Owner?",
+      text: "",
+      html: $html
+    ) {
+      success
+    }
   }
 `
 const CatQuery = gql`query allBrandCategories {

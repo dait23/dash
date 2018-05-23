@@ -94,11 +94,20 @@ renderX(){
 
 renderStatus(){
 
-     if(this.props.brand.status === '0' ){
+     if(this.props.brand.status == '1' ){
 
       return(
 
-        <div><Link to={`/brand/edit/${this.props.brand.id}`} className="badge badge-warning">Not Complete</Link></div>
+        <span className="badge badge-warning">FU 1</span>
+
+      )
+
+      }
+       if(this.props.brand.status == '2' ){
+
+      return(
+
+        <span className="badge badge-info">FU 2</span>
 
       )
 
@@ -107,7 +116,7 @@ renderStatus(){
 
        return(
 
-        <div><span className="badge badge-success" >Complete</span></div>
+        <span className="badge badge-success" >FU3</span>
 
       )
 
@@ -164,7 +173,7 @@ renderAction(){
                       <td>{this.props.brand.type.name}</td>
                       <td>{this.props.brand.phone}</td>
                       
-                       {this.renderX()}
+                       <td>{this.renderStatus()}</td>
                        <td>{this.props.brand.source}</td>
                       <td width='150'>
                           {this.renderAction()}

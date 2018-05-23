@@ -29,7 +29,7 @@ renderAddNew(){
    
    return(
       
-      <Link to={'/brand/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
+       <Link to={'/brand/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
     )
   }
   else{
@@ -56,6 +56,7 @@ renderMdm(){
                       <th>Category</th>
                       <th>Type</th>
                       <th>Phone</th>
+                      <th>Status</th>
                       <th>Source</th>
                       <th>Action</th>
                     </tr>
@@ -76,6 +77,7 @@ renderMdm(){
                       <th>Category</th>
                       <th>Type</th>
                       <th>Phone</th>
+                      <th>Status</th>
                       <th>Source</th>
                       <th>Action</th>
                     </tr>
