@@ -429,7 +429,7 @@ renderRent(){
                     modules={this.modules}
                     formats={this.formats}
                     placeholder="description"
-                    onChange={this.handleChange}
+                    onChange={this.handleDes}
                     >
 
                     </ReactQuill>
