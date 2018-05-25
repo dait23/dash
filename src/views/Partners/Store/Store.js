@@ -201,7 +201,8 @@ const createPartnerMutation = gql`
       $uId: String,
       $segmentsIds:[ID!],
       $imageUrl: String,
-      $imageId: String
+      $imageId: String,
+      $description: String,
     
     
       ) {
@@ -236,7 +237,8 @@ const createPartnerMutation = gql`
         uId: $uId,
         segmentsIds: $segmentsIds,
         imageUrl: $imageUrl,
-        imageId: $imageId
+        imageId: $imageId,
+        description: $description,
         ) {
       id
     }
@@ -407,11 +409,11 @@ const partnerStore = new class {
 
   }
 
-  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageUrl, imageId) =>
+  createPartner = (name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageUrl, imageId,description) =>
     client
       .mutate({
         mutation: createPartnerMutation,
-        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby,  website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageUrl, imageId},
+        variables: { name, slug, areaId, categoryId, address, picName, picPhone, nearby,  website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageUrl, imageId, description},
         refetchQueries: [{ query: allTeamQuery }]
       })
       .then(() => console.log('Created a new partners ..'), toast('Create Partner Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000)))

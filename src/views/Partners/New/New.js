@@ -2,6 +2,7 @@ import Dropzone from 'react-dropzone'
 import request from 'superagent';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { ToastContainer} from 'react-toastify';
+import ReactQuill from "react-quill";
 import partnerStore from '../Store/Store';
 import React, { Component } from 'react';
 import { inject, observer, Provider } from 'mobx-react';
@@ -71,6 +72,7 @@ const Partner = inject('partnerStore')(
         picName: '',
         picPhone: '',
         ownerName: '',
+        description:'',
         ownerPhone: '',
         remarks:'',
         avgVisitor: '',
@@ -103,21 +105,21 @@ const Partner = inject('partnerStore')(
         }
         //this.handleChange = this.handleChange.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
-          this.handleSelectChangeDay = this.handleSelectChangeDay.bind(this)
-         this.handleSelectChangeEvent = this.handleSelectChangeEvent.bind(this)
-        this.handleSelectChangeCollab = this.handleSelectChangeCollab.bind(this)
-        this.handleChangex = this.handleChangex.bind(this)
-        this.handleChangez = this.handleChangez.bind(this)
-         // this.handleChangeDay = this.handleChangeDay.bind(this)
-        this.handleChangeVit = this.handleChangeVit.bind(this)
-        this.handleChangeInc = this.handleChangeInc.bind(this)
-         this.handleChangeSec = this.handleChangeSec.bind(this)
-        this.handleChangeExc = this.handleChangeExc.bind(this)
-        //this.handleChangeRe = this.handleChangeRe.bind(this)
+       this.handleSelectChangeDay = this.handleSelectChangeDay.bind(this)
+       this.handleSelectChangeEvent = this.handleSelectChangeEvent.bind(this)
+       this.handleSelectChangeCollab = this.handleSelectChangeCollab.bind(this)
+       this.handleChangex = this.handleChangex.bind(this)
+       this.handleChangez = this.handleChangez.bind(this)
+       // this.handleChangeDay = this.handleChangeDay.bind(this)
+       this.handleChangeVit = this.handleChangeVit.bind(this)
+       this.handleChangeInc = this.handleChangeInc.bind(this)
+       this.handleChangeSec = this.handleChangeSec.bind(this)
+       this.handleChangeExc = this.handleChangeExc.bind(this)
+       //this.handleChangeRe = this.handleChangeRe.bind(this)
 
-        this.handleSelect = this.handleSelect.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-        
+       this.handleSelect = this.handleSelect.bind(this)
+       this.handleChange = this.handleChange.bind(this)
+        this.handleChangeDes = this.handleChangeDes.bind(this)
       }
    ////
 
@@ -127,6 +129,10 @@ const Partner = inject('partnerStore')(
     });
 
     this.handleImageUpload(files[0]);
+  }
+
+    handleChangeDes(value) {
+    this.setState({ description: value })
   }
 
   handleImageUpload(file) {
@@ -215,9 +221,33 @@ const Partner = inject('partnerStore')(
     this.state.uId, 
     this.state.segmentsIds,
     this.state.imageUrl,
-    this.state.imageId  
+    this.state.imageId,
+    this.state.description  
 
     );
+
+     modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'image', 'video'],
+    ['clean']
+  ]
+}
+/* 
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+]
+
   
    handleChangeSec (value) {
 
@@ -405,7 +435,7 @@ renderGeocodeFailure(err) {
                 <form  className="form-horizontal">
                    <div className="row">
                    <div className="col-md-6">
-                    <div className="form-group row">
+                    <div className="form-group row" style={{display:'none'}}>
                     <label className="col-md-3 form-control-label" htmlFor="text-input"></label>
                     <div className="col-md-9">
                       <input type="hidden" id="slug" value={sluger} name="slug" className="form-control" placeholder="Slug"
@@ -465,6 +495,24 @@ renderGeocodeFailure(err) {
                       <input type="text" id="text-input" value={this.state.ownerPhone} name="ownerPhone" className="form-control" placeholder="owner Phone"
                       onChange={(e) => this.setState({ownerPhone: e.target.value})}
                       />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Description</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.description}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="description"
+                    onChange={this.handleChangeDes}
+                    >
+
+                    </ReactQuill>
+                    
+                     
                     </div>
                   </div>
                   <div className="form-group row">

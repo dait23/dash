@@ -49,6 +49,10 @@ class AddEditSpace extends Component {
       wideId:'',
       rentId:'',
     partnerId: '',
+    total:'',
+    rules:'',
+    nearby:'',
+    visitor:'',
     price1:'',
     price7:'',
     price30:'',
@@ -61,8 +65,11 @@ class AddEditSpace extends Component {
     this.handleDes = this.handleDes.bind(this)
     this.onUpdatePress = this.onUpdatePress.bind(this);
     this.handleChangex = this.handleChangex.bind(this)
-     this.handleChangez = this.handleChangez.bind(this)
-     this.handleChangeRent = this.handleChangeRent.bind(this)
+    this.handleChangez = this.handleChangez.bind(this)
+    this.handleChangeRent = this.handleChangeRent.bind(this)
+    this.handleChangeRule = this.handleChangeRule.bind(this)
+    this.handleChangeNearby = this.handleChangeNearby.bind(this)
+    this.handleChangeVisit = this.handleChangeVisit.bind(this)
   }
   
  getRent(){
@@ -110,6 +117,15 @@ class AddEditSpace extends Component {
   
     handleDes(value) {
     this.setState({ description: value});
+  }
+    handleChangeRule(value) {
+    this.setState({ rules: value })
+  }
+   handleChangeNearby(value) {
+    this.setState({ nearby: value })
+  }
+  handleChangeVisit(value) {
+    this.setState({ visitor: value })
   }
    handleChangez(value) {
     this.setState({ remarks: value })
@@ -177,6 +193,10 @@ class AddEditSpace extends Component {
               price1
               price7
               price30
+              rules
+              visitor
+              total
+              nearby
               imageId
               imageUrl
               partner{
@@ -221,6 +241,10 @@ class AddEditSpace extends Component {
               imageUrl:results.data.Space.imageUrl,
               imageId:results.data.Space.imageId,
               description:results.data.Space.description,
+              total:results.data.Space.total,
+              rules:results.data.Space.rules,
+              nearby:results.data.Space.nearby,
+              visitor:results.data.Space.visitor,
               remarks:results.data.Space.remarks,
               partnerId:results.data.Space.partner.id,
               wideId:results.data.Space.wide.id,
@@ -239,8 +263,43 @@ class AddEditSpace extends Component {
      var fetch = require('graphql-fetch')(MainApi)
 
           var query = `
-            mutation updateBanner ($id: ID!, $title: String, $slug: String, $price1: String, $price7: String, $price30: String, $imageId: String, $imageUrl: String, $description: String, $remarks: String,  $partnerId: ID){
-              updateSpace (id: $id, title: $title, slug: $slug, price1: $price1, price7: $price7, price30: $price30, imageId: $imageId, imageUrl: $imageUrl, description: $description, remarks: $remarks, partnerId: $partnerId){
+            mutation updateBanner (
+              $id: ID!, 
+              $title: String, 
+              $slug: String, 
+              $price1: String, 
+              $price7: String, 
+              $price30: String, 
+              $imageId: String, 
+              $imageUrl: String, 
+              $description: String, 
+               $wideId: ID,
+              $remarks: String,  
+              $partnerId: ID, 
+              $visitor: String, 
+              $rules: String, 
+              $total: String, 
+              $nearby: String
+            ){
+              updateSpace (
+                id: $id, 
+                title: $title, 
+                slug: $slug, 
+                price1: $price1, 
+                price7: $price7, 
+                price30: $price30, 
+                imageId: $imageId, 
+                imageUrl: $imageUrl, 
+                description: $description, 
+                remarks: $remarks, 
+                partnerId: $partnerId,
+                visitor: $visitor, 
+                rules: $rules, 
+                total: $total, 
+                nearby: $nearby,
+                 wideId: $wideId
+
+                ){
                 id           
               }
             }
@@ -256,7 +315,14 @@ class AddEditSpace extends Component {
             imageUrl: this.state.imageUrl,
             imageId: this.state.imageId,
             description: this.state.description,
-            remarks: this.state.remarks
+            remarks: this.state.remarks,
+            wideId: this.state.wideId,
+            visitor: this.state.visitor, 
+            rules: this.state.rules, 
+            total: this.state.total, 
+            nearby: this.state.nearby,
+            wideId: this.state.wideId
+
           }
           var opts = {
             // custom fetch options
@@ -392,6 +458,18 @@ renderRent(){
 
 
 
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Total Space</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.total} name="total" className="form-control" placeholder="Total"
+                      onChange={(e) => this.setState({total: e.target.value})}
+                     
+                      />
+                    </div>
+                  </div>
+
+
+
                   
                   <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / hari</label>
@@ -430,6 +508,61 @@ renderRent(){
                     formats={this.formats}
                     placeholder="description"
                     onChange={this.handleDes}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
+                    <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Peraturan Space</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.rules}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="Peraturan Space"
+                    onChange={this.handleChangeRule}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Nearby Space</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.nearby}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="Nearby Space"
+                    onChange={this.handleChangeNearby}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Visitor Space</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.visitor}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="Visitor Space"
+                    onChange={this.handleChangeVisit}
                     >
 
                     </ReactQuill>

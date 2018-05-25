@@ -37,6 +37,10 @@ class AddSpace extends Component {
     partnerId: this.props.match.params.id,
     wideId:'',
     rentId:'',
+    total:'',
+    rules:'',
+    nearby:'',
+    visitor:'',
     price1:'',
     price7:'',
     price30:'',
@@ -46,9 +50,12 @@ class AddSpace extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handlePost = this.handlePost.bind(this)
-     this.handleChangex = this.handleChangex.bind(this)
-      this.handleChangez = this.handleChangez.bind(this)
-     this.handleChangeRent = this.handleChangeRent.bind(this)
+    this.handleChangex = this.handleChangex.bind(this)
+    this.handleChangez = this.handleChangez.bind(this)
+    this.handleChangeRent = this.handleChangeRent.bind(this)
+    this.handleChangeRule = this.handleChangeRule.bind(this)
+    this.handleChangeNearby = this.handleChangeNearby.bind(this)
+    this.handleChangeVisit = this.handleChangeVisit.bind(this)
   }
 
 
@@ -108,6 +115,15 @@ class AddSpace extends Component {
 
   handleChange(value) {
     this.setState({ description: value })
+  }
+   handleChangeRule(value) {
+    this.setState({ rules: value })
+  }
+   handleChangeNearby(value) {
+    this.setState({ nearby: value })
+  }
+  handleChangeVisit(value) {
+    this.setState({ visitor: value })
   }
    handleChangez(value) {
     this.setState({ remarks: value })
@@ -272,6 +288,16 @@ if (this.props.data.loading) {
                   </div>
 
                   <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Total Space</label>
+                    <div className="col-md-9">
+                      <input type="text" id="text-input" value={this.state.total} name="total" className="form-control" placeholder="Total"
+                      onChange={(e) => this.setState({total: e.target.value})}
+                     
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Harga / hari</label>
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.price1} name="price1" className="form-control" placeholder="Harga / hari"
@@ -307,6 +333,63 @@ if (this.props.data.loading) {
                     formats={this.formats}
                     placeholder="description"
                     onChange={this.handleChange}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Peraturan Space</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.rules}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="Peraturan Space"
+                    onChange={this.handleChangeRule}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Nearby Space</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.nearby}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="Nearby Space"
+                    onChange={this.handleChangeNearby}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
+
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Visitor Space</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.visitor}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="Visitor Space"
+                    onChange={this.handleChangeVisit}
                     >
 
                     </ReactQuill>
@@ -371,8 +454,8 @@ if (this.props.data.loading) {
   }
 
   handlePost = async () => {
-    const {title, slug, price1, price7, price30, description, remarks, imageUrl, imageId,  partnerId, wideId} = this.state
-    await this.props.addBanner({variables: { title, slug,  description, remarks, imageUrl, imageId,  partnerId, wideId, price1, price7, price30}})
+    const {title, slug, price1, price7, price30, description, remarks, imageUrl, imageId,  partnerId, wideId, visitor, rules, total, nearby} = this.state
+    await this.props.addBanner({variables: { title, slug,  description, remarks, imageUrl, imageId,  partnerId, wideId, price1, price7, price30, visitor, rules, total, nearby}})
 
 
    toast('Add Space Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';",2000))
@@ -393,6 +476,10 @@ const addMutation = gql`
   $wideId: ID,
   $imageUrl: String,
   $imageId: String,
+  $visitor: String,
+  $rules: String, 
+  $total: String, 
+  $nearby: String
 
 
 
@@ -410,6 +497,10 @@ const addMutation = gql`
     imageUrl: $imageUrl
     imageId: $imageId
     wideId: $wideId
+    visitor: $visitor, 
+    rules: $rules, 
+    total: $total, 
+    nearby: $nearby
 
 
 

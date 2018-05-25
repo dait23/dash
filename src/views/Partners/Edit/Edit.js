@@ -79,6 +79,7 @@ class EditPartners extends Component {
         picName: '',
         picPhone: '',
         ownerName: '',
+        description:'',
         ownerPhone: '',
         avgVisitor: '',
         avgSpending: '',
@@ -105,18 +106,19 @@ class EditPartners extends Component {
          //this.handleChange = this.handleChange.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
         this.handleSelectChangeDay = this.handleSelectChangeDay.bind(this)
-         this.handleSelectChangeEvent = this.handleSelectChangeEvent.bind(this)
+        this.handleSelectChangeEvent = this.handleSelectChangeEvent.bind(this)
         this.handleSelectChangeCollab = this.handleSelectChangeCollab.bind(this)
         this.handleChangex = this.handleChangex.bind(this)
         this.handleChangez = this.handleChangez.bind(this)
         this.handleChangeVit = this.handleChangeVit.bind(this)
         //this.handleChangeRe = this.handleChangeRe.bind(this)
-         this.handleChangeInc = this.handleChangeInc.bind(this)
+        this.handleChangeInc = this.handleChangeInc.bind(this)
         this.handleChangeExc = this.handleChangeExc.bind(this)
-         this.handleChangeSec = this.handleChangeSec.bind(this)
+        this.handleChangeSec = this.handleChangeSec.bind(this)
 
         this.handleSelect = this.handleSelect.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+        this.handleChangeDes = this.handleChangeDes.bind(this)
 
       }
  ////////////////////////////
@@ -128,6 +130,11 @@ class EditPartners extends Component {
 
     this.handleImageUpload(files[0]);
   }
+
+   handleChangeDes(value) {
+    this.setState({ description: value })
+  }
+
 
   handleImageUpload(file) {
     let upload = request.post(CLOUDINARY_UPLOAD_URL)
@@ -193,6 +200,28 @@ class EditPartners extends Component {
     })
   }
 
+    modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'image', 'video'],
+    ['clean']
+  ]
+}
+/* 
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+]
+
 
    componentDidMount() {
       var that = this;
@@ -219,6 +248,7 @@ class EditPartners extends Component {
               slug
               address
               avgVisitor
+              description
               avgSpending
               nearby
               peakHour
@@ -304,6 +334,7 @@ class EditPartners extends Component {
               name:results.data.Partner.name,
               slug:results.data.Partner.slug,
               address:results.data.Partner.address,
+              description:results.data.Partner.description,
               lat:results.data.Partner.lat,
               lng:results.data.Partner.lng,
               status:results.data.Partner.status,
@@ -941,6 +972,23 @@ renderArea(){
                       />
                     </div>
                   </div>
+                    <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="textarea-input">Description</label>
+                    <div className="col-md-9">
+                    
+                    <ReactQuill theme="snow"
+                    value={this.state.description}
+                    modules={this.modules}
+                    formats={this.formats}
+                    placeholder="description"
+                    onChange={this.handleChangeDes}
+                    >
+
+                    </ReactQuill>
+                    
+                     
+                    </div>
+                  </div>
                   <div className="form-group row">
                     <label className="col-md-3 form-control-label" htmlFor="text-input">Average Visitor</label>
                     <div className="col-md-9">
@@ -1206,10 +1254,10 @@ renderArea(){
 
        
       const userId = localStorage.getItem('uid');
-      const { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram,  avgVisitor, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl, status } = this.state
+      const { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram,  avgVisitor, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl, status, description } = this.state
     
       await this.props.updatePartnersMutation({variables: { 
-        id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl,  status: parseInt(this.state.status, 10) }})
+        id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl,  description, status: parseInt(this.state.status, 10) }})
        toast('Update Success', { type: toast.TYPE.SUCCESS, autoClose: 2000 }, setTimeout("location.href = '/partners/all';", 2000))
   }
 
@@ -1309,6 +1357,7 @@ const UPDATE_PARTNERS_MUTATION = gql`
       $website: String,
       $facebook: String,
       $instagram: String,
+      $description: String,
       $areaId: ID,
       $categoryId: ID,
       $userId:ID,
@@ -1362,7 +1411,8 @@ const UPDATE_PARTNERS_MUTATION = gql`
         segmentsIds: $segmentsIds,
          imageUrl: $imageUrl,
         imageId: $imageId,
-        status: $status
+        status: $status,
+        description: $description
 
     ) {
       id
