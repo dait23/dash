@@ -30,9 +30,16 @@ const allSpaceQuery = gql`
       title
       slug
       description
-      price
       imageId
       imageUrl
+      price1
+      price7
+      price30
+      total
+      wide{
+        id
+        size
+      }
       partner{
         id
         name

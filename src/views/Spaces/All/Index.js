@@ -34,15 +34,19 @@ const Space = inject('spaceStore')(
             <div className="card">
               <div className="card-header">
                 <i className="fa fa-image"></i> All Spaces ({count})
-                 <Link to={'/spaces/new'} className="btn btn-success btn-sm pull-right"><i className="fa fa-plus"></i>&nbsp; Add New</Link>
+                
               </div>
               <div className="card-block">
                 <table className="table table-bordered table-striped table-sm">
                   <thead>
                     <tr>
-                       <th>Name Space</th>
+                      <th>Thumb</th>
+                      <th>Name Space</th>
                       <th>Name Partner</th>
-                      <th>Price</th>
+                      <th>Total Space</th>
+                       <th>Daily Price</th>
+                       <th>Weekly Price</th>
+                       <th>Monthly Price</th>
                       <th>Action</th>
                     </tr>
                   </thead>
