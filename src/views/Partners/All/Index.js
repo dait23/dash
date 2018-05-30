@@ -50,6 +50,7 @@ const Partner = inject('partnerStore')(
                       <th width='100'>Area</th>
                       <th align="center" width='50'>Status</th>
                       <th>Spaces</th>
+                      <th align="center">Gallery</th>
                       <th>Action</th>
                     </tr>
                   </thead>

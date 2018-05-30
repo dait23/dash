@@ -1,0 +1,6 @@
+{
+  "name": "GalEdit",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Edit.js"
+}

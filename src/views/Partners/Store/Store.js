@@ -26,6 +26,10 @@ const allTeamQuery = gql`
     peakHour
     picName
     picPhone
+     galleries{
+      id
+      name
+    }
     inclusions{
       id
       name

@@ -639,8 +639,21 @@ const AddSpace = Loadable({
   timeout: 10000, // 10 second
 });
 
+
+const AddGallery = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/Gallery/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
 const AddEditSpace = Loadable({
  loader: () => fakeDelay(500).then(() => import('../../views/Partners/SpaceEdit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const AddEditGallery = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Partners/GalEdit/')),
    loading: Loading,
   timeout: 10000, // 10 second
 });
@@ -717,6 +730,24 @@ const NewMainCategory = Loadable({
 
 const EditMainCategory = Loadable({
  loader: () => fakeDelay(500).then(() => import('../../views/Setting/MainCategory/Edit/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const Segment = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Segment/All/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const NewSegment = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Segment/New/')),
+   loading: Loading,
+  timeout: 10000, // 10 second
+});
+
+const EditSegment = Loadable({
+ loader: () => fakeDelay(500).then(() => import('../../views/Setting/Segment/Edit/')),
    loading: Loading,
   timeout: 10000, // 10 second
 });
@@ -816,6 +847,8 @@ class Full extends Component {
                  <Route path="/partners/edit/:id" name="Edit" component={EditPartners} />
 
                 <Route path="/partners/space/:id" name="Add Sapce" component={AddSpace} />
+                <Route path="/partners/gallery/:id" name="Add Gallery" component={AddGallery} />
+                <Route path="/partners/gallery-edit/:id" name="Edit Gallery" component={AddEditGallery} />
                 <Route path="/partners/space-edit/:id" name="Edit" component={AddEditSpace} />
 
                 <Route path="/member/all" name="Member" component={Members}/>
@@ -839,6 +872,10 @@ class Full extends Component {
                  <Route path="/setting/main-category/all" name="MainCategory" component={MainCategory}/>
                   <Route path="/setting/main-category/new" name="New" component={NewMainCategory}/>
                   <Route path="/setting/main-category/edit/:id" name="Edit" component={EditMainCategory}/>
+
+                  <Route path="/setting/segment/all" name="All" component={Segment}/>
+                  <Route path="/setting/segment/new" name="New" component={NewSegment}/>
+                  <Route path="/setting/segment/edit/:id" name="Edit" component={EditSegment}/>
 
                 <Route path="/spaces/all" name="All" component={Spaces}/>
 

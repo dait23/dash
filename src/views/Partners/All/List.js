@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {Cloudinary_Name, No_Avatar, No_Image} from '../../../views/Api/';
 import {Image} from 'cloudinary-react';
 import ListSpace from './ListSpace';
+import ListGal from './ListGal';
 
 class List extends React.Component {
 
@@ -19,9 +20,26 @@ class List extends React.Component {
 
 renderGallery(){
 
- if(this.props.partner.status){
+ if(this.props.partner.galleries == ''){
+  
+   return(
+      
+        <p>No Gallery</p>
+    )
 
+ }
+ else{
+   return(
 
+       <ol>
+                            {this.props.partner.galleries.map((galeri) => (
+                            <ListGal
+                              key={galeri.id}
+                              galeri={galeri}
+                            />
+                          ))}
+                          </ol>
+   )
  }
 
 }
@@ -43,7 +61,7 @@ renderGallery(){
 
         return(
 
-             <Image cloudName={Cloudinary_Name} publicId={this.props.partner.imageId} width="100" crop="scale" />
+             <Image cloudName={Cloudinary_Name} publicId={this.props.partner.imageId} width="50" crop="scale" />
 
           )
       }      
@@ -67,14 +85,14 @@ renderSpace(){
      return(
 
 
-     <ul>
+     <ol>
                             {this.props.partner.spaces.map((space) => (
                             <ListSpace
                               key={space.id}
                               space={space}
                             />
                           ))}
-                          </ul>
+                          </ol>
 
 
 
@@ -134,7 +152,7 @@ renderSpace(){
     return (
      
                     <tr>
-                     <td width="80">{this.renderThumb()}</td>
+                     <td width="50">{this.renderThumb()}</td>
                       <td>{this.props.partner.name}</td>
                       <td>{this.props.partner.category.name}</td>
                       <td>{this.props.partner.area.name}</td>
@@ -146,11 +164,12 @@ renderSpace(){
 
                       </td>
       
-            
-                      <td width='200'>
+                     <td align="center">{this.renderGallery()}</td>
+                      <td width='250'>
                          <a href={`/partners/edit/${this.props.partner.id}`} className="badge badge-info">Edit</a>
                          <span className="badge badge-danger" onClick={this.handleDelete} style={{cursor: 'pointer'}}>Delete</span>
                          <Link to={`/partners/space/${this.props.partner.id}`} className="badge badge-success">Add Space</Link>
+                         <a href={`/partners/gallery/${this.props.partner.id}`} className="badge badge-warning">Add Gallery</a>
                         
                       </td>
                          
