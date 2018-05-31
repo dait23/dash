@@ -445,9 +445,13 @@ renderGeocodeFailure(err) {
                      
                     </div>
                   </div>
+                   <div className="form-group row">
+                   <label className="col-md-13 form-control-label" htmlFor="text-input">NB: <strong>*</strong> Harus Diisi</label>
+
+                   </div>
 
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Partner ID</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Partner ID <strong>*</strong></label>
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.uId} name="uId" className="form-control" placeholder="partner ID"
                       onChange={(e) => this.setState({uId: e.target.value})}
@@ -457,7 +461,7 @@ renderGeocodeFailure(err) {
                   </div>
                            
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Partner Name</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Partner Name <strong>*</strong></label>
                     <div className="col-md-9">
                       <input type="text" id="text-input" value={this.state.name} name="name" className="form-control" placeholder="partner name"
                       onChange={(e) => this.setState({name: e.target.value})}
@@ -525,7 +529,7 @@ renderGeocodeFailure(err) {
                   </div>
 
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Segment Market</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Segment Market <strong>*</strong></label>
                     <div className="col-md-9">
                       <Multiselect
                        onChange={this.handleChangeSec}
@@ -556,7 +560,7 @@ renderGeocodeFailure(err) {
 
 
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Inclusions</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Inclusions <strong>*</strong></label>
                     <div className="col-md-9">
                     
                       <Multiselect
@@ -577,7 +581,7 @@ renderGeocodeFailure(err) {
               
 
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Exclusion</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Exclusion <strong>*</strong></label>
                     <div className="col-md-9">
                     
                        <Multiselect
@@ -620,7 +624,7 @@ renderGeocodeFailure(err) {
    
 
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Category</label>
+                    <label className="col-md-3 form-control-label" htmlFor="select">Category <strong>*</strong></label>
                     <div className="col-md-9">
                        <Select
                         name="categoryId"
@@ -638,7 +642,7 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Address</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Address <strong>*</strong></label>
                     <div className="col-md-9">
                       <PlacesAutocomplete
                         renderSuggestion={renderSuggestion}
@@ -682,7 +686,7 @@ renderGeocodeFailure(err) {
 
                   
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Area / Regional</label>
+                    <label className="col-md-3 form-control-label" htmlFor="select">Area / Regional <strong>*</strong></label>
                     <div className="col-md-9">
                       
                       <Select
@@ -701,7 +705,7 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Visitor Type</label>
+                    <label className="col-md-3 form-control-label" htmlFor="select">Visitor Type <strong>*</strong></label>
                     <div className="col-md-9">
                          
                       <Multiselect
@@ -721,7 +725,7 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Facility</label>
+                    <label className="col-md-3 form-control-label" htmlFor="select">Facility <strong>*</strong></label>
                     <div className="col-md-9">
                       
                       <Multiselect
@@ -742,7 +746,7 @@ renderGeocodeFailure(err) {
                   </div>
 
                    <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Event Type</label>
+                    <label className="col-md-3 form-control-label" htmlFor="select">Event Type <strong>*</strong></label>
                     <div className="col-md-9">
                       
                       <Multiselect
@@ -763,7 +767,7 @@ renderGeocodeFailure(err) {
                   </div>
 
                   <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="select">Event Collabs</label>
+                    <label className="col-md-3 form-control-label" htmlFor="select">Event Collabs <strong>*</strong></label>
                     <div className="col-md-9">
                       
                       <Multiselect
@@ -783,7 +787,7 @@ renderGeocodeFailure(err) {
                     </div>
                   </div>
                     <div className="form-group row">
-                    <label className="col-md-3 form-control-label" htmlFor="text-input">Busy Day</label>
+                    <label className="col-md-3 form-control-label" htmlFor="text-input">Busy Day <strong>*</strong></label>
                     <div className="col-md-9">
                        <Multiselect
                        onChange={this.handleSelectChangeDay}
@@ -849,8 +853,10 @@ renderGeocodeFailure(err) {
               </div>
               <div className="card-footer">
 
+               {this.state.name && this.state.uId && this.state.areaId && this.state.categoryId && this.state.address && this.state.visitorsIds && this.state.facilitiesIds && this.state.collabsIds && this.state.typesIds && this.state.inclusionsIds && this.state.exclusionsIds && this.state.segmentsIds && this.state.daysIds &&   
+
                 <button type="submit" className="btn btn-sm btn-primary" onClick={this.handlePost}><i className="fa fa-dot-circle-o"></i> Save</button>
-                
+               }
                 <Link to={'/partners/all'} className="btn btn-sm btn-danger"><i className="fa fa-ban"></i>&nbsp; Cancel</Link>
               </div>
             </div>
