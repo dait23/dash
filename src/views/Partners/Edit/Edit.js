@@ -87,7 +87,7 @@ class EditPartners extends Component {
         lng: '',
         peakHour: '',
         categoryId: '',
-        userId: localStorage.getItem('uid'),
+        userId: '',
         areaId: '',
         visitors:[],
         status:'',
@@ -110,6 +110,7 @@ class EditPartners extends Component {
         this.handleSelectChangeCollab = this.handleSelectChangeCollab.bind(this)
         this.handleChangex = this.handleChangex.bind(this)
         this.handleChangez = this.handleChangez.bind(this)
+         this.handleChanger = this.handleChanger.bind(this)
         this.handleChangeVit = this.handleChangeVit.bind(this)
         //this.handleChangeRe = this.handleChangeRe.bind(this)
         this.handleChangeInc = this.handleChangeInc.bind(this)
@@ -330,6 +331,7 @@ formats = [
             that.setState({
               data : results.data.Partner,
               id:results.data.Partner.id,
+              userId:results.data.Partner.user.id,
               uId:results.data.Partner.uId,
               name:results.data.Partner.name,
               slug:results.data.Partner.slug,
@@ -353,7 +355,7 @@ formats = [
               exclusions:results.data.Partner.exclusions,
                website:results.data.Partner.website,
               status:results.data.Partner.status,
-              userId:results.data.Partner.user.id,
+         
               workingHour:results.data.Partner.workingHour,
               facebook:results.data.Partner.facebook,
               instagram:results.data.Partner.instagram,
@@ -458,6 +460,14 @@ handleChangeInc (value) {
           areaId:areaId.value
         });
         console.log(`area: ${areaId.value}`);
+      }
+
+
+      handleChanger = (userId) => {
+        this.setState({ 
+          userId:userId.value
+        });
+        console.log(`member: ${userId.value}`);
       }
 
      handleChangeVit (value) {
@@ -592,7 +602,38 @@ renderArea(){
        )
 
   }
+ 
 
+ renderMember(){
+
+  if (this.props.userQuery.loading) {
+
+    return (<div></div>)
+
+  }else{
+   
+    return(
+
+               
+               <Select
+                        name="userId"
+                        placeholder="Select Member"
+                        value={this.state.userId}
+                        onChange={this.handleChanger}
+                        options={this.props.userQuery.allUsers.map((user) => (
+                           
+                           {value: user.id, label: user.name}
+
+
+                          ))}
+                      />
+
+
+       )
+
+  }
+
+ }
 
 
 
@@ -1206,6 +1247,14 @@ renderArea(){
                        
                     </div>
                   </div>
+
+                  <div className="form-group row">
+                    <label className="col-md-3 form-control-label" htmlFor="select">Member</label>
+                    <div className="col-md-9">
+                      {this.renderMember()}
+                       
+                    </div>
+                  </div>
                  
                   
 
@@ -1253,8 +1302,8 @@ renderArea(){
 
 
        
-      const userId = localStorage.getItem('uid');
-      const { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram,  avgVisitor, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl, status, description } = this.state
+     //const userId = localStorage.getItem('uid');
+      const { id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram,  avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl, status, description } = this.state
     
       await this.props.updatePartnersMutation({variables: { 
         id, name, slug, areaId, categoryId, address, picName, picPhone, nearby, website, facebook, facilities, instagram, avgVisitor, userId, visitorsIds, facilitiesIds, lat, lng, collabsIds, typesIds, workingHour, inclusionsIds, exclusionsIds, ownerName, ownerPhone, remarks, daysIds, uId, segmentsIds, imageId, imageUrl,  description, status: parseInt(this.state.status, 10) }})
@@ -1268,6 +1317,16 @@ renderArea(){
 
 const SecQuery = gql`query allSegments {
   allSegments(orderBy:name_ASC) {
+    id
+    name
+  }
+}`
+
+
+const userQuery = gql`query allUsers {
+  allUsers(filter:{
+    jabatan:"Member"
+  },orderBy:name_ASC) {
     id
     name
   }
@@ -1359,8 +1418,8 @@ const UPDATE_PARTNERS_MUTATION = gql`
       $instagram: String,
       $description: String,
       $areaId: ID,
-      $categoryId: ID,
       $userId:ID,
+      $categoryId: ID,
       $facilitiesIds: [ID!],
       $visitorsIds: [ID!],
       $lat: Float,
@@ -1396,7 +1455,6 @@ const UPDATE_PARTNERS_MUTATION = gql`
         instagram: $instagram,
         inclusionsIds: $inclusionsIds,
         exclusionsIds: $exclusionsIds,
-        userId: $userId
         visitorsIds: $visitorsIds,
         facilitiesIds:  $facilitiesIds,
         lat: $lat,
@@ -1412,7 +1470,8 @@ const UPDATE_PARTNERS_MUTATION = gql`
          imageUrl: $imageUrl,
         imageId: $imageId,
         status: $status,
-        description: $description
+        description: $description,
+        userId:$userId
 
     ) {
       id
@@ -1425,6 +1484,7 @@ const UPDATE_PARTNERS_MUTATION = gql`
 
 
 export default compose(
+  graphql(userQuery, { name: 'userQuery' }),
   graphql(ExQuery, { name: 'ExQuery' }),
    graphql(SecQuery, { name: 'SecQuery' }),
   graphql(IncQuery, { name: 'IncQuery' }),
